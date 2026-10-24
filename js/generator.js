@@ -1,67 +1,89 @@
-// 1. Role Logic
+let cropper = null; // Global variable for cropper
+
+// 1. Role Logic (Section Wise)
 function updateRoleFields() {
     const role = document.getElementById('roleSelect').value;
-    const roleFieldGroup = document.getElementById('roleFieldGroup');
-    const roleFieldLabel = document.getElementById('roleFieldLabel');
-    const roleInput = document.getElementById('roleInput');
-    const websiteGroup = document.getElementById('websiteGroup');
-    
+    const container = document.getElementById('roleFieldsContainer');
+    const field1Group = document.getElementById('roleField1Group');
+    const field1Label = document.getElementById('roleField1Label');
+    const field1Input = document.getElementById('roleField1Input');
+    const field2Group = document.getElementById('roleField2Group');
+    const field2Label = document.getElementById('roleField2Label');
+    const field2Input = document.getElementById('roleField2Input');
+
     if (role === 'personal') {
-        roleFieldGroup.style.display = 'none';
-        websiteGroup.style.display = 'none';
-        roleInput.value = '';
+        container.classList.add('hidden');
+        field1Input.value = '';
+        field2Input.value = '';
     } else {
-        roleFieldGroup.style.display = 'block';
-        websiteGroup.style.display = 'block';
-        if (role === 'professional') roleFieldLabel.textContent = 'Company Name';
-        if (role === 'student') roleFieldLabel.textContent = 'College/University';
-        if (role === 'organization') roleFieldLabel.textContent = 'Organization Name';
+        container.classList.remove('hidden');
+        if (role === 'professional') {
+            field1Label.textContent = 'Designation (Job Title)';
+            field1Input.placeholder = 'Software Engineer';
+            field2Label.textContent = 'Company Name';
+            field2Input.placeholder = 'Tech Corp';
+        } else if (role === 'student') {
+            field1Label.textContent = 'Class / Grade';
+            field1Input.placeholder = 'B.Tech 3rd Year';
+            field2Label.textContent = 'School / College';
+            field2Input.placeholder = 'ABC University';
+        } else if (role === 'business') {
+            field1Label.textContent = 'Your Role';
+            field1Input.placeholder = 'Founder / CEO';
+            field2Label.textContent = 'Business Name';
+            field2Input.placeholder = 'My Startup';
+        }
     }
     updateCard();
 }
 
 // 2. Live Update Logic
 function updateCard() {
+    // Values
     const name = document.getElementById('nameInput').value.trim();
-    const designation = document.getElementById('designationInput').value.trim();
-    const roleText = document.getElementById('roleInput').value.trim();
+    const dob = document.getElementById('dobInput').value.trim();
+    const blood = document.getElementById('bloodInput').value.trim();
+    const role1 = document.getElementById('roleField1Input').value.trim();
+    const role2 = document.getElementById('roleField2Input').value.trim();
+    const location = document.getElementById('locationInput').value.trim();
+    const address = document.getElementById('addressInput').value.trim();
+    const showAddress = document.getElementById('showAddress').checked;
     const mobile = document.getElementById('mobileInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
     const website = document.getElementById('websiteInput').value.trim();
-    const location = document.getElementById('locationInput').value.trim();
-    const dob = document.getElementById('dobInput').value.trim();
-    const blood = document.getElementById('bloodInput').value.trim();
-    const skills = document.getElementById('skillsInput').value.trim();
 
-    // Classic Card Updates
+    // Classic Card
     document.getElementById('cardName').textContent = name || "Your Name";
-    document.getElementById('cardDesignation').textContent = designation || "Designation";
-    toggleField('cardRole', 'cardRole', roleText);
-    document.getElementById('cardRole').textContent = roleText;
+    toggleFieldWithIcon('cardDob', 'dobText', dob);
+    toggleFieldWithIcon('cardBlood', 'bloodText', blood);
+    
+    toggleField('cardRole1', 'cardRole1', role1);
+    document.getElementById('cardRole1').textContent = role1;
+    toggleField('cardRole2', 'cardRole2', role2);
+    document.getElementById('cardRole2').textContent = role2;
+
+    toggleFieldWithIcon('cardLocation', 'locationText', location);
+    toggleFieldWithIcon('cardAddress', 'addressText', showAddress ? address : '');
     
     toggleFieldWithIcon('cardMobile', 'mobileText', mobile);
     toggleFieldWithIcon('cardEmail', 'emailText', email);
     toggleFieldWithIcon('cardWebsite', 'websiteText', website);
 
-    toggleFieldWithIcon('cardLocation', 'locationText', location);
-    toggleFieldWithIcon('cardSkills', 'skillsText', skills);
-    toggleFieldWithIcon('cardDob', 'dobText', dob);
-    toggleFieldWithIcon('cardBlood', 'bloodText', blood);
-
-    // Modern Front Updates
+    // Modern Front
     document.getElementById('modernName').textContent = name || "Your Name";
-    document.getElementById('modernDesignation').textContent = designation || "Designation";
-    toggleField('modernRole', 'modernRole', roleText);
-    document.getElementById('modernRole').textContent = roleText;
+    toggleField('modernRole1', 'modernRole1', role1);
+    document.getElementById('modernRole1').textContent = role1;
+    toggleField('modernRole2', 'modernRole2', role2);
+    document.getElementById('modernRole2').textContent = role2;
 
-    // Modern Back Updates
+    // Modern Back
+    toggleFieldWithIcon('bDob', 'bDobText', dob);
+    toggleFieldWithIcon('bBlood', 'bBloodText', blood);
+    toggleFieldWithIcon('bLocation', 'bLocationText', location);
+    toggleFieldWithIcon('bAddress', 'bAddressText', showAddress ? address : '');
     toggleFieldWithIcon('bMobile', 'bMobileText', mobile);
     toggleFieldWithIcon('bEmail', 'bEmailText', email);
     toggleFieldWithIcon('bWebsite', 'bWebsiteText', website);
-    toggleFieldWithIcon('bLocation', 'bLocationText', location);
-    toggleFieldWithIcon('bSkills', 'bSkillsText', skills);
-    toggleFieldWithIcon('bDob', 'bDobText', dob);
-    toggleFieldWithIcon('bBlood', 'bBloodText', blood);
 }
 
 function toggleField(wrapperId, textId, value) {
@@ -83,21 +105,63 @@ function toggleFieldWithIcon(wrapperId, textId, value) {
     }
 }
 
-// 3. Photo Upload
-document.getElementById('fileInput').addEventListener('change', function(e) { handlePhoto(e.target.files[0]); });
-document.getElementById('cameraInput').addEventListener('change', function(e) { handlePhoto(e.target.files[0]); });
-function handlePhoto(file) {
+// 3. Photo Upload & Crop Logic
+document.getElementById('fileInput').addEventListener('change', function(e) { handlePhotoUpload(e.target.files[0]); });
+document.getElementById('cameraInput').addEventListener('change', function(e) { handlePhotoUpload(e.target.files[0]); });
+
+function handlePhotoUpload(file) {
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) { 
-            document.getElementById('cardPhoto').src = e.target.result; 
-            document.getElementById('modernPhoto').src = e.target.result; 
+        reader.onload = function(e) {
+            const cropModal = document.getElementById('cropModal');
+            const cropImage = document.getElementById('cropImage');
+            
+            cropImage.src = e.target.result;
+            cropModal.classList.remove('hidden');
+
+            // Initialize Cropper
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1, // Square crop for circle
+                viewMode: 1,
+                dragMode: 'move',
+                autoCropArea: 0.8,
+                restore: false,
+                guides: false,
+                highlight: false,
+                cropBoxMovable: false,
+                cropBoxResizable: false,
+                toggleDragModeOnDblclick: false,
+            });
         };
         reader.readAsDataURL(file);
     }
 }
 
-// 4. Layout Logic (Swap between Classic & Modern)
+// Crop Apply/Cancel
+document.getElementById('applyCropBtn').addEventListener('click', function() {
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
+        const croppedImageUrl = canvas.toDataURL('image/png');
+        
+        document.getElementById('cardPhoto').src = croppedImageUrl;
+        document.getElementById('modernPhoto').src = croppedImageUrl;
+        
+        cropper.destroy();
+        cropper = null;
+        document.getElementById('cropModal').classList.add('hidden');
+    }
+});
+
+document.getElementById('cancelCropBtn').addEventListener('click', function() {
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+    document.getElementById('cropModal').classList.add('hidden');
+});
+
+// 4. Layout Logic
 function setLayout(layout) {
     const classicCard = document.getElementById('classicCard');
     const modernWrapper = document.getElementById('modernWrapper');
@@ -146,7 +210,6 @@ document.getElementById('downloadBtn').addEventListener('click', async function(
     this.disabled = true;
 
     try {
-        // Temporarily hide non-card elements if needed (none here, but good practice)
         const canvas = await html2canvas(wrapper, {
             scale: 2,
             useCORS: true,
@@ -168,7 +231,10 @@ document.getElementById('downloadBtn').addEventListener('click', async function(
 // 8. Contact Popup
 function openContactPopup(e) { e.preventDefault(); document.getElementById('contactModal').classList.remove('hidden'); }
 function closeContactPopup() { document.getElementById('contactModal').classList.add('hidden'); }
-window.addEventListener('click', function(e) { const modal = document.getElementById('contactModal'); if (e.target === modal) closeContactPopup(); });
+window.addEventListener('click', function(e) { 
+    const modal = document.getElementById('contactModal'); 
+    if (e.target === modal) closeContactPopup(); 
+});
 
 // Initial Run
 updateRoleFields();
