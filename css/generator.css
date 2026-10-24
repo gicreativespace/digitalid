@@ -1,0 +1,393 @@
+/* --- Generator Layout --- */
+.generator-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--forest-green);
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    font-size: 12px;
+    color: var(--champagne);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+}
+
+.generator-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.form-section {
+    flex: 1;
+    max-width: 400px;
+    background: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(200, 169, 106, 0.2);
+}
+
+.preview-section {
+    flex: 1;
+    max-width: 380px;
+    display: flex;
+    justify-content: center;
+}
+
+.sticky-preview {
+    position: sticky;
+    top: 80px; /* Space for top nav */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Form Elements --- */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--forest-green);
+    margin-bottom: 6px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(200, 169, 106, 0.4);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--forest-green);
+    background: var(--ivory);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: var(--champagne);
+}
+
+.photo-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-upload {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    background: var(--ivory);
+    border: 1px dashed var(--champagne);
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--forest-green);
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-upload:hover {
+    background: rgba(200, 169, 106, 0.1);
+}
+
+/* --- Theme & Layout Selectors --- */
+.theme-selector, .layout-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.theme-btn, .layout-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--champagne);
+    background: transparent;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--forest-green);
+    transition: all 0.2s;
+}
+
+.theme-btn.active, .layout-btn.active {
+    background: var(--forest-green);
+    color: var(--white);
+    border-color: var(--forest-green);
+}
+
+/* --- The ID Card Design --- */
+.id-card {
+    width: 320px;
+    aspect-ratio: 9 / 16;
+    background-color: var(--white);
+    border: 1px solid var(--champagne);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.card-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--champagne);
+}
+
+/* Photo */
+.card-photo-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--champagne);
+    padding: 3px;
+    margin-bottom: 16px;
+    background: var(--ivory);
+}
+
+.card-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Text */
+.card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.card-designation {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--champagne);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.card-org {
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.card-divider {
+    width: 80%;
+    height: 1px;
+    background: var(--champagne);
+    opacity: 0.5;
+    margin: 12px 0;
+}
+
+.card-contact {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.card-contact p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--champagne);
+    margin-top: auto;
+    margin-bottom: 8px;
+}
+
+.card-branding {
+    font-size: 9px;
+    opacity: 0.7;
+}
+
+/* --- Themes (Easy to Add) --- */
+.theme-classic {
+    background-color: var(--white);
+    color: var(--forest-green);
+}
+
+.theme-dark {
+    background-color: var(--forest-green);
+    color: var(--white);
+    border-color: var(--forest-light);
+}
+.theme-dark .card-header, .theme-dark .card-name, .theme-dark .card-org, .theme-dark .card-contact {
+    color: var(--white);
+}
+.theme-dark .card-photo-container {
+    background-color: var(--forest-light);
+    border-color: var(--champagne);
+}
+
+.theme-minimal {
+    background-color: #FFFFFF;
+    color: #333333;
+    border-color: #E0E0E0;
+}
+.theme-minimal .card-header .line, .theme-minimal .card-divider {
+    background-color: #CCCCCC;
+}
+
+.theme-earthy {
+    background-color: #F4ECE1;
+    color: #5D4037;
+    border-color: #D7CCC8;
+}
+.theme-earthy .card-header .line, .theme-earthy .card-divider {
+    background-color: #BCAAA4;
+}
+
+/* --- Layouts (Easy to Add) --- */
+.layout-classic {
+    /* Default Center Layout */
+}
+
+.layout-modern {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    aspect-ratio: 16 / 9 !important; /* Landscape */
+    width: 100% !important;
+    max-width: 420px;
+}
+.layout-modern .card-photo-container {
+    width: 100px;
+    height: 100px;
+}
+.layout-modern .card-name {
+    text-align: left;
+    width: 100%;
+}
+.layout-modern .card-divider {
+    width: 100%;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .generator-layout {
+        flex-direction: column; /* Stack on mobile: Form first, Preview second */
+        align-items: center;
+    }
+    
+    .form-section {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .preview-section {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    .sticky-preview {
+        position: relative;
+        top: 0;
+    }
+    
+    .id-card {
+        width: 100%;
+        max-width: 320px; /* Keep it mobile friendly */
+    }
+}
+
+/* --- Top Nav (Settings) --- */
+.top-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+}
+
+.back-btn {
+    color: var(--forest-green);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* --- Valiass Link & Popup --- */
+.valiass-link {
+    color: var(--forest-green);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.valiass-link:hover {
+    text-decoration: underline;
+}
+
+/* Modal (Reused from index.html) */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(31, 61, 43, 0.6);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; backdrop-filter: blur(3px);
+}
+.modal-content {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    width: 90%; max-width: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.contact-buttons {
+    display: flex; flex-direction: column; gap: 10px; margin: 20px 0;
+}
+.close-btn {
+    background: transparent; border: none; color: var(--warm-grey); cursor: pointer;
+}
