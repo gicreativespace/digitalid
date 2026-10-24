@@ -160,7 +160,6 @@
                     </div>
                 </div>
 
-                <!-- Clear Form Button -->
                 <button id="clearFormBtn" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Clear All Data</button>
             </div>
 
@@ -194,11 +193,10 @@
                             
                             <div class="card-divider"></div>
                             
-                            <div class="card-extra-details">
-                                <div class="row-details">
-                                    <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
-                                    <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
-                                </div>
+                            <!-- Extra Details (Stacked) -->
+                            <div class="card-extra-details stacked">
+                                <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
+                                <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
                                 <p id="cardLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="locationText"></span></p>
                                 <p id="cardAddress" class="hidden"><i class="fa-solid fa-map-location-dot accent-icon"></i> <span id="addressText"></span></p>
                             </div>
@@ -235,6 +233,7 @@
                                     <span class="line"></span> DIGITAL ID <span class="line"></span>
                                 </div>
                                 <div class="back-content">
+                                    <!-- Left & Right Stacked Layout -->
                                     <div class="back-columns">
                                         <div class="back-col">
                                             <p id="bDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="bDobText"></span></p>
@@ -248,7 +247,9 @@
                                             <p id="bWebsite" class="hidden"><i class="fa-solid fa-globe accent-icon"></i> <span id="bWebsiteText"></span></p>
                                         </div>
                                     </div>
+                                    <!-- Back Footer -->
                                     <div class="back-footer">
+                                        <div class="card-divider" style="width: 100%; margin: 10px 0;"></div>
                                         <p class="card-tagline">Your Identity, Digitally.</p>
                                         <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
                                     </div>
