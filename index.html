@@ -120,26 +120,37 @@
             });
         }
 
-        // 2. PWA Install Logic
+        // 2. PWA Install Logic with Fallback
         let deferredPrompt;
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // Show Install Button
+        // FOR TESTING: Always show the button after 1 second (if not installed)
+        setTimeout(() => {
+            if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
+                installBtnContainer.classList.remove('hidden');
+            }
+        }, 1000);
+
+        // Capture the prompt if available
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installBtnContainer.classList.remove('hidden');
+            console.log('Install prompt ready');
         });
 
-        // Install Button Click
+        // Button Click Action
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
+                // If browser supports prompt, show it
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
-                installBtnContainer.classList.add('hidden'); // Auto-hide after click
+                installBtnContainer.classList.add('hidden');
+            } else {
+                // Fallback: If prompt is not available (e.g., iOS or localhost issue)
+                alert("To install the app:\n\n1. Tap the browser menu (3 dots).\n2. Select 'Add to Home Screen' or 'Install App'.");
             }
         });
 
@@ -149,7 +160,7 @@
             installBtnContainer.classList.add('hidden');
         });
 
-        // Auto-hide if already installed (Standalone Mode)
+        // Auto-hide if already opened as an App (Standalone Mode)
         if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
             installBtnContainer.classList.add('hidden');
         }
