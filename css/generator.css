@@ -163,7 +163,8 @@
 .card-branding { font-size: 9px; opacity: 0.7; transition: color 0.3s; }
 
 /* Modern Layout Specifics */
-#modernFront { flex-direction: row; justify-content: flex-start; gap: 20px; padding: 20px; }
+#modernFront { padding: 20px; justify-content: flex-start; }
+#modernFront .modern-body { display: flex; flex-direction: row; align-items: center; gap: 20px; width: 100%; margin-top: 10px; }
 #modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; flex-shrink: 0; }
 #modernFront .modern-text { display: flex; flex-direction: column; justify-content: center; text-align: left; }
 #modernFront .card-name { text-align: left; font-size: 20px; margin: 0; }
@@ -171,10 +172,23 @@
 #modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
 
 #modernBack { padding: 20px; }
-.back-content { display: flex; flex-direction: column; height: 100%; justify-content: center; }
-.back-columns { display: flex; justify-content: space-between; width: 100%; }
-.back-col { display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
-.back-col p { display: flex; align-items: center; gap: 8px; }
+#modernBack .back-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+#modernBack .back-columns { display: flex; justify-content: space-between; width: 100%; margin-top: 10px; }
+#modernBack .back-col { display: flex; flex-direction: column; gap: 8px; font-size: 11px; text-align: left; }
+#modernBack .back-col p { display: flex; align-items: center; gap: 8px; }
+#modernBack .back-footer { margin-top: auto; text-align: center; width: 100%; }
+
+/* --- Action Buttons & Share --- */
+.action-buttons { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.share-buttons { display: flex; gap: 10px; width: 100%; }
+.btn-share {
+    flex: 1; padding: 10px; border-radius: 8px; text-align: center; text-decoration: none; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;
+}
+#shareWhatsapp { background: #25D366; color: white; border: 1px solid #25D366; }
+#shareWhatsapp:hover { background: #1DA851; }
+#shareEmail { background: var(--ivory); color: var(--forest-green); border: 1px solid var(--champagne); }
+#shareEmail:hover { background: rgba(200, 169, 106, 0.2); }
 
 /* --- Accent Colors --- */
 .accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; transition: color 0.3s; }
@@ -208,18 +222,8 @@
 .theme-earthy .accent-icon { color: var(--accent-color); }
 
 /* --- Crop Modal Specifics --- */
-.crop-container {
-    width: 100%;
-    height: 300px;
-    background: #333;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-#cropImage {
-    display: block;
-    max-width: 100%;
-}
+.crop-container { width: 100%; height: 300px; background: #333; margin-bottom: 16px; border-radius: 8px; overflow: hidden; }
+#cropImage { display: block; max-width: 100%; }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
