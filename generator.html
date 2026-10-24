@@ -15,6 +15,10 @@
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Cropper.js for Image Cropping -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <!-- html2canvas for Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -53,69 +57,77 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="nameInput" placeholder="Masina Venkata Surendra" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Date of Birth (DOB)</label>
+                    <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
+                </div>
+
+                <!-- Section 2: Detail -->
+                <div class="form-section-title">2. Detail</div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()">
+                </div>
+
+                <!-- Section 3: Role -->
+                <div class="form-section-title">3. Role</div>
+                <div class="form-group">
                     <label>Select Role</label>
                     <select id="roleSelect" onchange="updateRoleFields()">
                         <option value="personal">Personal</option>
                         <option value="professional">Professional</option>
                         <option value="student">Student</option>
-                        <option value="organization">Organization</option>
+                        <option value="business">Business</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label>Name *</label>
-                    <input type="text" id="nameInput" placeholder="Masina Venkata Surendra" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Designation *</label>
-                    <input type="text" id="designationInput" placeholder="Creative Soul" oninput="updateCard()">
-                </div>
-
-                <!-- Section 2: Role Specific -->
-                <div class="form-section-title">2. Role Details</div>
-                <div class="form-group" id="roleFieldGroup" style="display: none;">
-                    <label id="roleFieldLabel">Company Name</label>
-                    <input type="text" id="roleInput" placeholder="GI Creative Space" oninput="updateCard()">
-                </div>
-                <div class="form-group" id="websiteGroup">
-                    <label>Website</label>
-                    <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
-                </div>
-
-                <!-- Section 3: Contact & Extra -->
-                <div class="form-section-title">3. Contact & Extra</div>
                 
-                <div class="form-group">
-                    <label>Mobile</label>
-                    <input type="text" id="mobileInput" placeholder="+91 8985361991" oninput="updateCard()">
+                <!-- Dynamic Role Fields -->
+                <div id="roleFieldsContainer" class="hidden">
+                    <div class="form-group" id="roleField1Group">
+                        <label id="roleField1Label">Label</label>
+                        <input type="text" id="roleField1Input" placeholder="" oninput="updateCard()">
+                    </div>
+                    <div class="form-group" id="roleField2Group">
+                        <label id="roleField2Label">Label</label>
+                        <input type="text" id="roleField2Input" placeholder="" oninput="updateCard()">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="emailInput" placeholder="surendramasina@gmail.com" oninput="updateCard()">
-                </div>
-
+                <!-- Section 4: Address -->
+                <div class="form-section-title">4. Address</div>
                 <div class="form-group">
                     <label>Location (City)</label>
                     <input type="text" id="locationInput" placeholder="Hyderabad" oninput="updateCard()">
                 </div>
-
                 <div class="form-group">
-                    <label>DOB & Blood Group</label>
-                    <div class="dob-blood-group">
-                        <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
-                        <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()" style="max-width: 80px;">
-                    </div>
+                    <label>Full Address</label>
+                    <input type="text" id="addressInput" placeholder="123, Street Name..." oninput="updateCard()">
+                    <label class="checkbox-label" style="margin-top: 6px;">
+                        <input type="checkbox" id="showAddress" onchange="updateCard()"> Show on Card
+                    </label>
                 </div>
 
+                <!-- Section 5: Contacts -->
+                <div class="form-section-title">5. Contacts</div>
                 <div class="form-group">
-                    <label>Skills</label>
-                    <input type="text" id="skillsInput" placeholder="UI/UX, Branding" oninput="updateCard()">
+                    <label>Phone / Mobile</label>
+                    <input type="text" id="mobileInput" placeholder="+91 8985361991" oninput="updateCard()">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="emailInput" placeholder="surendramasina@gmail.com" oninput="updateCard()">
+                </div>
+                <div class="form-group">
+                    <label>Website (Optional)</label>
+                    <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
                 </div>
 
-                <!-- Design Selection -->
-                <div class="form-section-title">4. Design</div>
+                <!-- Section 6: Design -->
+                <div class="form-section-title">6. Design</div>
                 
                 <div class="form-group">
                     <label>Card Layout</label>
@@ -166,8 +178,8 @@
                             </div>
                             
                             <h2 id="cardName" class="card-name">Your Name</h2>
-                            <p id="cardDesignation" class="card-designation">Designation</p>
-                            <p id="cardRole" class="card-org hidden">Organization</p>
+                            <p id="cardRole1" class="card-designation hidden"></p>
+                            <p id="cardRole2" class="card-org hidden"></p>
                             
                             <div class="card-divider"></div>
                             
@@ -186,7 +198,7 @@
                                     <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
                                 </div>
                                 <p id="cardLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="locationText"></span></p>
-                                <p id="cardSkills" class="hidden"><i class="fa-solid fa-wand-magic-sparkles accent-icon"></i> <span id="skillsText"></span></p>
+                                <p id="cardAddress" class="hidden"><i class="fa-solid fa-map-location-dot accent-icon"></i> <span id="addressText"></span></p>
                             </div>
                             
                             <div class="card-divider"></div>
@@ -204,8 +216,8 @@
                                 </div>
                                 <div class="modern-text">
                                     <h2 id="modernName" class="card-name">Your Name</h2>
-                                    <p id="modernDesignation" class="card-designation">Designation</p>
-                                    <p id="modernRole" class="card-org hidden">Organization</p>
+                                    <p id="modernRole1" class="card-designation hidden"></p>
+                                    <p id="modernRole2" class="card-org hidden"></p>
                                 </div>
                                 <p class="card-branding" style="position: absolute; bottom: 10px; right: 10px;">An initiative of @valiass</p>
                             </div>
@@ -218,7 +230,7 @@
                                             <p id="bDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="bDobText"></span></p>
                                             <p id="bBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bBloodText"></span></p>
                                             <p id="bLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="bLocationText"></span></p>
-                                            <p id="bSkills" class="hidden"><i class="fa-solid fa-wand-magic-sparkles accent-icon"></i> <span id="bSkillsText"></span></p>
+                                            <p id="bAddress" class="hidden"><i class="fa-solid fa-map-location-dot accent-icon"></i> <span id="bAddressText"></span></p>
                                         </div>
                                         <div class="back-col">
                                             <p id="bMobile" class="hidden"><i class="fa-solid fa-phone accent-icon"></i> <span id="bMobileText"></span></p>
@@ -243,6 +255,20 @@
 
         <div class="page-footer">
             An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team
+        </div>
+    </div>
+
+    <!-- Crop Image Modal -->
+    <div id="cropModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3>Crop Your Photo</h3>
+            <div class="crop-container">
+                <img id="cropImage" src="" alt="Crop">
+            </div>
+            <div class="contact-buttons" style="flex-direction: row; justify-content: center; gap: 16px;">
+                <button id="applyCropBtn" class="btn btn-primary" style="width: auto; padding: 10px 24px;">Apply</button>
+                <button id="cancelCropBtn" class="btn btn-secondary" style="width: auto; padding: 10px 24px;">Cancel</button>
+            </div>
         </div>
     </div>
 
