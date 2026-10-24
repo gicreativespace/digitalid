@@ -1,249 +1,64 @@
-/* --- Generator Layout --- */
-.generator-container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
+/* (పైన ఉన్న CSS అంతా అలాగే ఉంచండి, కానీ ఈ కింది భాగాలు మాత్రం మార్చండి) */
 
-.page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--forest-green);
-    text-align: center;
-    margin-bottom: 4px;
-}
-
-.page-subtitle {
-    font-size: 12px;
-    color: var(--champagne);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 40px;
-}
-
-.generator-layout {
+/* --- Classic Layout: Extra Details (Stacked) --- */
+.card-extra-details.stacked {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    width: 100%;
+    padding-left: 10px; /* కొంచెం లెఫ్ట్ అలైన్ కోసం */
 }
 
-.form-section {
-    flex: 1;
-    max-width: 400px;
-    background: var(--white);
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(200, 169, 106, 0.2);
-}
-
-.preview-section {
-    flex: 1;
-    max-width: 380px;
+.card-extra-details.stacked p {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
 }
 
-.sticky-preview {
-    position: sticky;
-    top: 80px;
+/* --- Modern Back Layout (Left & Right Stacked) --- */
+#modernBack .back-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+}
+
+#modernBack .back-columns {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    margin-top: 5px;
+    flex-grow: 1;
 }
 
-/* --- Form Elements --- */
-.form-section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: var(--forest-green);
-    border-bottom: 1px solid var(--champagne);
-    padding-bottom: 6px;
-    margin: 24px 0 16px 0;
-}
-.form-section-title:first-child { margin-top: 0; }
-
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--forest-green); margin-bottom: 6px; }
-.form-group input[type="text"], .form-group input[type="email"], .form-group select {
-    width: 100%; padding: 10px 12px; border: 1px solid rgba(200, 169, 106, 0.4); border-radius: 8px;
-    font-family: 'Inter', sans-serif; font-size: 14px; color: var(--forest-green); background: var(--ivory); outline: none; transition: border-color 0.2s;
-}
-.form-group input:focus, .form-group select:focus { border-color: var(--champagne); }
-
-.checkbox-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--warm-grey); cursor: pointer; }
-
-.photo-buttons { display: flex; gap: 10px; }
-.btn-upload {
-    flex: 1; padding: 10px; text-align: center; background: var(--ivory); border: 1px dashed var(--champagne); border-radius: 8px;
-    font-size: 13px; cursor: pointer; color: var(--forest-green); font-weight: 500; transition: background 0.2s;
-}
-.btn-upload:hover { background: rgba(200, 169, 106, 0.1); }
-
-/* --- Selectors --- */
-.layout-selector { display: flex; gap: 8px; margin-bottom: 10px; }
-.layout-btn {
-    padding: 8px 12px; border: 1px solid var(--champagne); background: transparent; border-radius: 20px;
-    font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; color: var(--forest-green); transition: all 0.2s;
-}
-.layout-btn.active { background: var(--forest-green); color: var(--white); border-color: var(--forest-green); }
-
-.theme-selector { display: flex; gap: 8px; flex-wrap: wrap; }
-.theme-btn {
-    padding: 8px 12px; border: 1px solid var(--champagne); background: transparent; border-radius: 20px;
-    font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; color: var(--forest-green); transition: all 0.2s;
-}
-.theme-btn.active { background: var(--forest-green); color: var(--white); border-color: var(--forest-green); }
-
-.color-selector { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
-.color-swatch {
-    width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s, border 0.2s;
-}
-.color-swatch:hover { transform: scale(1.1); }
-.color-swatch.active { border-color: var(--champagne); transform: scale(1.15); box-shadow: 0 0 0 2px var(--white); }
-
-/* --- Download Wrapper --- */
-.download-wrapper {
-    display: flex; flex-direction: column; align-items: center; padding: 10px; background-color: var(--ivory); border-radius: 20px; width: 100%;
-    max-width: 340px;
-}
-
-/* --- The ID Card Design --- */
-.id-card {
-    width: 100%;
-    background-color: var(--white);
-    border: 1px solid var(--champagne);
-    border-radius: 20px;
-    padding: 24px;
+#modernBack .back-col {
     display: flex;
     flex-direction: column;
+    gap: 8px; /* స్టాక్ చేసినప్పుడు గ్యాప్ */
+    font-size: 11px;
+    text-align: left;
+}
+
+#modernBack .back-col p {
+    display: flex;
     align-items: center;
-    box-shadow: var(--shadow-soft);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    gap: 8px;
 }
 
-/* Classic Card Specific */
-#classicCard { aspect-ratio: 9 / 16; }
-
-/* Modern Cards Specific */
-.modern-wrapper { width: 100%; display: flex; flex-direction: column; gap: 16px; }
-#modernFront, #modernBack { aspect-ratio: 16 / 9; }
-
-/* Card Content */
-.card-header {
-    display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
-    font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 3px; margin-bottom: 16px;
-}
-.card-header .line { flex: 1; height: 1px; background: var(--champagne); }
-
-.card-photo-container {
-    width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--champagne); padding: 3px; margin-bottom: 12px; background: var(--ivory);
-}
-.card-photo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.card-name { font-family: 'Playfair Display', serif; font-size: 18px; text-align: center; margin-bottom: 4px; }
-.card-designation { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--champagne); font-weight: 600; margin-bottom: 4px; }
-.card-org { font-size: 12px; margin-bottom: 12px; text-align: center; }
-.card-divider { width: 80%; height: 1px; background: var(--champagne); opacity: 0.5; margin: 10px 0; }
-.card-contact { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
-.card-contact p { display: flex; align-items: center; gap: 8px; }
-
-.card-extra-details { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; margin-bottom: 4px; }
-.row-details { display: flex; justify-content: flex-start; gap: 12px; }
-.card-extra-details p { display: flex; align-items: center; gap: 8px; }
-
-.hidden { display: none !important; }
-
-.card-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: var(--champagne); margin-top: auto; margin-bottom: 6px; transition: color 0.3s; }
-.card-branding { font-size: 9px; opacity: 0.7; transition: color 0.3s; }
-
-/* Modern Layout Specifics */
-#modernFront { padding: 20px; justify-content: flex-start; }
-#modernFront .modern-body { display: flex; flex-direction: row; align-items: center; gap: 20px; width: 100%; margin-top: 10px; }
-#modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; flex-shrink: 0; }
-#modernFront .modern-text { display: flex; flex-direction: column; justify-content: center; text-align: left; }
-#modernFront .card-name { text-align: left; font-size: 20px; margin: 0; }
-#modernFront .card-designation { text-align: left; margin: 0; }
-#modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
-
-#modernBack { padding: 20px; }
-#modernBack .back-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
-#modernBack .back-columns { display: flex; justify-content: space-between; width: 100%; margin-top: 10px; }
-#modernBack .back-col { display: flex; flex-direction: column; gap: 8px; font-size: 11px; text-align: left; }
-#modernBack .back-col p { display: flex; align-items: center; gap: 8px; }
-#modernBack .back-footer { margin-top: auto; text-align: center; width: 100%; }
-
-/* --- Action Buttons & Share --- */
-.action-buttons { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
-.share-buttons { display: flex; gap: 10px; width: 100%; }
-.btn-share {
-    flex: 1; padding: 10px; border-radius: 8px; text-align: center; text-decoration: none; font-size: 13px; font-weight: 600;
-    display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;
-}
-#shareWhatsapp { background: #25D366; color: white; border: 1px solid #25D366; }
-#shareWhatsapp:hover { background: #1DA851; }
-#shareEmail { background: var(--ivory); color: var(--forest-green); border: 1px solid var(--champagne); }
-#shareEmail:hover { background: rgba(200, 169, 106, 0.2); }
-
-/* --- Accent Colors --- */
-.accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; transition: color 0.3s; }
-.color-green { --accent-color: #6B8E78; }
-.color-gold { --accent-color: #D4AF37; }
-.color-blue { --accent-color: #6C8EBF; }
-.color-rose { --accent-color: #B56B6B; }
-.color-slate { --accent-color: #7A8B99; }
-.color-white { --accent-color: #FFFFFF; }
-.color-black { --accent-color: #333333; }
-
-/* --- Themes --- */
-.theme-classic { background-color: var(--white); color: var(--forest-green); }
-.theme-classic .accent-icon { color: var(--accent-color); }
-
-.theme-dark { background-color: var(--forest-green); color: var(--white); border-color: var(--forest-light); }
-.theme-dark .card-header, .theme-dark .card-name, .theme-dark .card-org, .theme-dark .card-contact, .theme-dark .card-extra-details, .theme-dark .back-col { color: var(--white); }
-.theme-dark .card-photo-container { background-color: var(--forest-light); border-color: var(--champagne); }
-.theme-dark .card-tagline { color: var(--champagne); }
-.theme-dark .valiass-link { color: var(--white) !important; }
-.theme-dark .accent-icon { color: var(--accent-color); }
-
-.theme-minimal { background-color: #FCFBF7; color: #4A4A4A; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-.theme-minimal .card-header { color: var(--forest-green); }
-.theme-minimal .card-divider { background-color: #E0E0E0; }
-.theme-minimal .card-name { color: var(--forest-green); }
-.theme-minimal .accent-icon { color: var(--accent-color); }
-
-.theme-earthy { background-color: #F4ECE1; color: #5D4037; border-color: #D7CCC8; }
-.theme-earthy .card-header .line, .theme-earthy .card-divider { background-color: #BCAAA4; }
-.theme-earthy .accent-icon { color: var(--accent-color); }
-
-/* --- Crop Modal Specifics --- */
-.crop-container { width: 100%; height: 300px; background: #333; margin-bottom: 16px; border-radius: 8px; overflow: hidden; }
-#cropImage { display: block; max-width: 100%; }
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-    .generator-layout { flex-direction: column; align-items: center; }
-    .form-section { width: 100%; max-width: 100%; }
-    .preview-section { width: 100%; max-width: 100%; margin-top: 20px; }
-    .sticky-preview { position: relative; top: 0; }
-    .download-wrapper { max-width: 100%; }
-    #classicCard { width: 100%; max-width: 320px; }
-    #modernFront, #modernBack { width: 100%; max-width: 380px; }
+#modernBack .back-footer {
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
 }
 
-/* --- Top Nav & Links --- */
-.top-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; }
-.back-btn { color: var(--forest-green); text-decoration: none; font-weight: 600; font-size: 14px; }
-.valiass-link { color: var(--forest-green); font-weight: 600; cursor: pointer; text-decoration: none; }
-.valiass-link:hover { text-decoration: underline; }
+#modernBack .back-footer .card-tagline {
+    font-size: 11px;
+    margin-bottom: 2px;
+}
 
-/* --- Modal --- */
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 61, 43, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); }
-.modal-content { background: var(--white); padding: 24px; border-radius: 16px; text-align: center; width: 90%; max-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-.contact-buttons { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-.close-btn { background: transparent; border: none; color: var(--warm-grey); cursor: pointer; }
+#modernBack .back-footer .card-branding {
+    font-size: 9px;
+}
