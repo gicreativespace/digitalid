@@ -75,8 +75,7 @@
 }
 .form-group input:focus, .form-group select:focus { border-color: var(--champagne); }
 
-.dob-blood-group { display: flex; gap: 10px; }
-.dob-blood-group input { flex: 1; }
+.checkbox-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--warm-grey); cursor: pointer; }
 
 .photo-buttons { display: flex; gap: 10px; }
 .btn-upload {
@@ -188,11 +187,9 @@
 .color-black { --accent-color: #333333; }
 
 /* --- Themes --- */
-/* Classic Theme */
 .theme-classic { background-color: var(--white); color: var(--forest-green); }
 .theme-classic .accent-icon { color: var(--accent-color); }
 
-/* Dark Theme */
 .theme-dark { background-color: var(--forest-green); color: var(--white); border-color: var(--forest-light); }
 .theme-dark .card-header, .theme-dark .card-name, .theme-dark .card-org, .theme-dark .card-contact, .theme-dark .card-extra-details, .theme-dark .back-col { color: var(--white); }
 .theme-dark .card-photo-container { background-color: var(--forest-light); border-color: var(--champagne); }
@@ -200,17 +197,29 @@
 .theme-dark .valiass-link { color: var(--white) !important; }
 .theme-dark .accent-icon { color: var(--accent-color); }
 
-/* Minimal Theme */
 .theme-minimal { background-color: #FCFBF7; color: #4A4A4A; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 .theme-minimal .card-header { color: var(--forest-green); }
 .theme-minimal .card-divider { background-color: #E0E0E0; }
 .theme-minimal .card-name { color: var(--forest-green); }
 .theme-minimal .accent-icon { color: var(--accent-color); }
 
-/* Earthy Theme */
 .theme-earthy { background-color: #F4ECE1; color: #5D4037; border-color: #D7CCC8; }
 .theme-earthy .card-header .line, .theme-earthy .card-divider { background-color: #BCAAA4; }
 .theme-earthy .accent-icon { color: var(--accent-color); }
+
+/* --- Crop Modal Specifics --- */
+.crop-container {
+    width: 100%;
+    height: 300px;
+    background: #333;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+#cropImage {
+    display: block;
+    max-width: 100%;
+}
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
