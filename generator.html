@@ -159,6 +159,9 @@
                         <button class="theme-btn" data-theme="earthy" onclick="setTheme('earthy')">Earthy</button>
                     </div>
                 </div>
+
+                <!-- Clear Form Button -->
+                <button id="clearFormBtn" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Clear All Data</button>
             </div>
 
             <!-- RIGHT SIDE: LIVE PREVIEW -->
@@ -191,7 +194,6 @@
                             
                             <div class="card-divider"></div>
                             
-                            <!-- Extra Details -->
                             <div class="card-extra-details">
                                 <div class="row-details">
                                     <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
@@ -207,23 +209,31 @@
                             <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
                         </div>
 
-                        <!-- MODERN CARDS (Front & Back) - Hidden by default -->
+                        <!-- MODERN CARDS (Front & Back) -->
                         <div id="modernWrapper" class="modern-wrapper hidden">
                             <!-- Modern Front -->
                             <div id="modernFront" class="id-card theme-classic color-green layout-modern">
-                                <div class="card-photo-container">
-                                    <img id="modernPhoto" src="https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150" alt="Profile">
+                                <div class="card-header">
+                                    <span class="line"></span> DIGITAL ID <span class="line"></span>
                                 </div>
-                                <div class="modern-text">
-                                    <h2 id="modernName" class="card-name">Your Name</h2>
-                                    <p id="modernRole1" class="card-designation hidden"></p>
-                                    <p id="modernRole2" class="card-org hidden"></p>
+                                <div class="modern-body">
+                                    <div class="card-photo-container">
+                                        <img id="modernPhoto" src="https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150" alt="Profile">
+                                    </div>
+                                    <div class="modern-text">
+                                        <h2 id="modernName" class="card-name">Your Name</h2>
+                                        <p id="modernRole1" class="card-designation hidden"></p>
+                                        <p id="modernRole2" class="card-org hidden"></p>
+                                    </div>
                                 </div>
                                 <p class="card-branding" style="position: absolute; bottom: 10px; right: 10px;">An initiative of @valiass</p>
                             </div>
                             
                             <!-- Modern Back -->
                             <div id="modernBack" class="id-card theme-classic color-green layout-modern-back">
+                                <div class="card-header">
+                                    <span class="line"></span> DIGITAL ID <span class="line"></span>
+                                </div>
                                 <div class="back-content">
                                     <div class="back-columns">
                                         <div class="back-col">
@@ -238,16 +248,26 @@
                                             <p id="bWebsite" class="hidden"><i class="fa-solid fa-globe accent-icon"></i> <span id="bWebsiteText"></span></p>
                                         </div>
                                     </div>
-                                    <div class="card-divider" style="width: 100%; margin-top: 10px;"></div>
-                                    <p class="card-tagline" style="margin-top: 10px;">Your Identity, Digitally.</p>
-                                    <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                                    <div class="back-footer">
+                                        <p class="card-tagline">Your Identity, Digitally.</p>
+                                        <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <button id="downloadBtn" class="btn btn-primary" style="margin-top: 16px; width: 100%; max-width: 320px;">Download Card</button>
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button id="downloadBtn" class="btn btn-primary">Download Card</button>
+                        
+                        <div class="share-buttons">
+                            <a href="#" id="shareWhatsapp" class="btn-share" onclick="shareWhatsApp(event)"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                            <a href="#" id="shareEmail" class="btn-share" onclick="shareEmail(event)"><i class="fa-solid fa-envelope"></i> Email</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
