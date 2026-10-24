@@ -141,7 +141,7 @@
 
 .card-photo-container {
     width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--champagne); padding: 3px; margin-bottom: 12px; background: var(--ivory);
-    flex-shrink: 0; /* Photo size not shrinking */
+    flex-shrink: 0;
 }
 .card-photo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
@@ -152,11 +152,10 @@
 .card-contact { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
 .card-contact p { display: flex; align-items: center; gap: 8px; }
 
-/* --- Auto-Fit Text Rules (The Magic) --- */
-.auto-fit-text, 
-.auto-fit-text span {
-    word-break: break-word; /* పొడవైన పదాలు కొత్త లైన్‌కి */
-    white-space: normal; /* రెండు లైన్లలోకి వెళ్ళేలా */
+/* --- Auto-Fit Text Rules --- */
+.auto-fit-text, .auto-fit-text span {
+    word-break: break-word;
+    white-space: normal;
     line-height: 1.2;
 }
 
@@ -176,7 +175,7 @@
 .card-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: var(--champagne); margin-top: auto; margin-bottom: 6px; transition: color 0.3s; }
 .card-branding { font-size: 9px; opacity: 0.7; transition: color 0.3s; }
 
-/* --- Modern Layout Specifics --- */
+/* --- Modern Front Layout --- */
 #modernFront { padding: 20px; justify-content: flex-start; }
 #modernFront .modern-body { display: flex; flex-direction: row; align-items: center; gap: 20px; width: 100%; margin-top: 10px; }
 #modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; }
@@ -185,17 +184,63 @@
 #modernFront .card-designation { text-align: left; margin: 0; }
 #modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
 
-/* --- Modern Back Layout --- */
-#modernBack { padding: 20px; }
-#modernBack .back-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
-#modernBack .back-columns { display: flex; justify-content: space-between; width: 100%; margin-top: 5px; flex-grow: 1; gap: 15px; }
-#modernBack .back-col { display: flex; flex-direction: column; gap: 8px; font-size: 11px; text-align: left; flex: 1; min-width: 0; }
-#modernBack .back-col p { display: flex; align-items: flex-start; gap: 8px; }
+/* --- Modern Back Layout (Fixed Footer) --- */
+#modernBack { 
+    padding: 15px 20px 10px 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-/* Modern Back Footer */
-#modernBack .back-footer { text-align: center; width: 100%; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(200, 169, 106, 0.4); }
-#modernBack .back-footer .card-tagline { font-size: 11px; margin-bottom: 2px; margin-top: 6px; }
-#modernBack .back-footer .card-branding { font-size: 9px; }
+#modernBack .back-content { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    justify-content: space-between; 
+}
+
+#modernBack .back-columns { 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    gap: 15px;
+}
+
+#modernBack .back-col { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px; 
+    font-size: 10px; 
+    text-align: left; 
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+}
+
+#modernBack .back-col p { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 6px; 
+    margin: 0;
+}
+
+#modernBack .back-footer {
+    text-align: center;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(200, 169, 106, 0.4);
+    flex-shrink: 0;
+}
+
+#modernBack .back-footer .card-tagline { 
+    font-size: 10px; 
+    margin-bottom: 0px; 
+    margin-top: 0px;
+}
+
+#modernBack .back-footer .card-branding { 
+    font-size: 8px; 
+}
 
 /* --- Action Buttons & Share --- */
 .action-buttons { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
