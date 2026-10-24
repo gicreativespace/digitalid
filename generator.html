@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- html2canvas for downloading -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Your Digital ID - Free</title>
@@ -14,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     
+    <!-- html2canvas for Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/generator.css">
@@ -35,7 +36,6 @@
             <!-- LEFT SIDE: FORM -->
             <div class="form-section">
                 
-                <!-- Photo Upload -->
                 <div class="form-group">
                     <label>Profile Photo</label>
                     <div class="photo-buttons">
@@ -46,7 +46,6 @@
                     </div>
                 </div>
 
-                <!-- Text Inputs -->
                 <div class="form-group">
                     <label>Name *</label>
                     <input type="text" id="nameInput" placeholder="Masina Venkata Surendra" oninput="updateCard()">
@@ -77,7 +76,6 @@
                     <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
                 </div>
 
-                <!-- Theme Selector -->
                 <div class="form-group">
                     <label>Select Theme</label>
                     <div class="theme-selector">
@@ -88,12 +86,11 @@
                     </div>
                 </div>
 
-                <!-- Layout Selector (Photo Position) -->
                 <div class="form-group">
                     <label>Card Layout</label>
                     <div class="layout-selector">
-                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('layout-classic')">Classic</button>
-                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('layout-modern')">Modern</button>
+                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('layout-classic')">Classic (Single)</button>
+                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('layout-modern')">Modern (Front & Back)</button>
                     </div>
                 </div>
             </div>
@@ -102,32 +99,62 @@
             <div class="preview-section">
                 <div class="sticky-preview">
                     
-                    <!-- THE CARD -->
-                    <div id="cardPreview" class="id-card theme-classic layout-classic">
-                        <div class="card-header">
-                            <span class="line"></span> DIGITAL ID <span class="line"></span>
+                    <!-- WRAPPER FOR DOWNLOAD (Contains Front & Back) -->
+                    <div id="downloadWrapper" class="download-wrapper">
+                        
+                        <!-- FRONT CARD -->
+                        <div id="frontCard" class="id-card theme-classic layout-classic">
+                            <div class="card-header">
+                                <span class="line"></span> DIGITAL ID <span class="line"></span>
+                            </div>
+                            
+                            <div class="card-photo-container">
+                                <img id="cardPhoto" src="https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150" alt="Profile">
+                            </div>
+                            
+                            <h2 id="cardName" class="card-name">Your Name</h2>
+                            <p id="cardDesignation" class="card-designation">Designation</p>
+                            <p id="cardOrg" class="card-org">Organization</p>
+                            
+                            <div class="card-divider"></div>
+                            
+                            <div class="card-contact">
+                                <p id="cardMobile" class="hidden"><span class="icon">📞</span> <span id="mobileText"></span></p>
+                                <p id="cardEmail" class="hidden"><span class="icon">✉️</span> <span id="emailText"></span></p>
+                                <p id="cardWebsite" class="hidden"><span class="icon">🌐</span> <span id="websiteText"></span></p>
+                            </div>
+                            
+                            <div class="card-divider"></div>
+                            
+                            <p class="card-tagline">Your Identity, Digitally.</p>
+                            <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
                         </div>
-                        
-                        <div class="card-photo-container">
-                            <img id="cardPhoto" src="https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150" alt="Profile">
+
+                        <!-- BACK CARD (Only visible in Modern Layout) -->
+                        <div id="backCard" class="id-card theme-classic layout-modern-back hidden">
+                            <div class="card-header">
+                                <span class="line"></span> DIGITAL ID <span class="line"></span>
+                            </div>
+                            
+                            <div class="back-content">
+                                <p class="back-name" id="backName">Your Name</p>
+                                <p class="back-designation" id="backDesignation">Designation</p>
+                                
+                                <div class="card-divider" style="width: 60%;"></div>
+                                
+                                <div class="card-contact back-contact">
+                                    <p id="backMobile" class="hidden"><span class="icon">📞</span> <span id="backMobileText"></span></p>
+                                    <p id="backEmail" class="hidden"><span class="icon">✉️</span> <span id="backEmailText"></span></p>
+                                    <p id="backWebsite" class="hidden"><span class="icon">🌐</span> <span id="backWebsiteText"></span></p>
+                                </div>
+                                
+                                <div class="card-divider" style="width: 60%;"></div>
+                                
+                                <p class="card-tagline" style="margin-top: 20px;">Your Identity, Digitally.</p>
+                                <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                            </div>
                         </div>
-                        
-                        <h2 id="cardName" class="card-name">Your Name</h2>
-                        <p id="cardDesignation" class="card-designation">Designation</p>
-                        <p id="cardOrg" class="card-org">Organization</p>
-                        
-                        <div class="card-divider"></div>
-                        
-                        <div class="card-contact">
-                            <p id="cardMobile" class="hidden"><span class="icon">📞</span> <span id="mobileText"></span></p>
-                            <p id="cardEmail" class="hidden"><span class="icon">✉️</span> <span id="emailText"></span></p>
-                            <p id="cardWebsite" class="hidden"><span class="icon">🌐</span> <span id="websiteText"></span></p>
-                        </div>
-                        
-                        <div class="card-divider"></div>
-                        
-                        <p class="card-tagline">Your Identity, Digitally.</p>
-                        <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+
                     </div>
 
                     <!-- Format & Download -->
@@ -145,7 +172,6 @@
 
         </div>
 
-        <!-- Footer Branding -->
         <div class="page-footer">
             An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team
         </div>
@@ -164,7 +190,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="js/generator.js"></script>
 </body>
 </html>
