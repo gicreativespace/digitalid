@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digital-id-v11'; // Version incremented
+const CACHE_NAME = 'digital-id-v21'; // Version incremented
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
