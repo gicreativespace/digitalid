@@ -61,6 +61,27 @@
                     <input type="text" id="orgInput" placeholder="GI Creative Space" oninput="updateCard()">
                 </div>
 
+                <!-- New Fields -->
+                <div class="form-group">
+                    <label>Date of Birth (DOB)</label>
+                    <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="locationInput" placeholder="Hyderabad, India" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Skills</label>
+                    <input type="text" id="skillsInput" placeholder="UI/UX, Branding" oninput="updateCard()">
+                </div>
+
                 <div class="form-group">
                     <label>Mobile</label>
                     <input type="text" id="mobileInput" placeholder="+91 8985361991" oninput="updateCard()">
@@ -87,10 +108,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Card Layout</label>
+                    <label>Card Layout & Format</label>
                     <div class="layout-selector">
-                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('layout-classic')">Classic (Single)</button>
-                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('layout-modern')">Modern (Front & Back)</button>
+                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('classic')">Classic (9:16)</button>
+                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('modern')">Modern (16:9)</button>
                     </div>
                 </div>
             </div>
@@ -137,36 +158,34 @@
                             </div>
                             
                             <div class="back-content">
-                                <p class="back-name" id="backName">Your Name</p>
-                                <p class="back-designation" id="backDesignation">Designation</p>
-                                
-                                <div class="card-divider" style="width: 60%;"></div>
-                                
-                                <div class="card-contact back-contact">
-                                    <p id="backMobile" class="hidden"><span class="icon">📞</span> <span id="backMobileText"></span></p>
-                                    <p id="backEmail" class="hidden"><span class="icon">✉️</span> <span id="backEmailText"></span></p>
-                                    <p id="backWebsite" class="hidden"><span class="icon">🌐</span> <span id="backWebsiteText"></span></p>
+                                <div class="back-columns">
+                                    <!-- Left Column: Personal -->
+                                    <div class="back-col">
+                                        <p id="backDob" class="hidden"><strong>DOB:</strong> <span id="backDobText"></span></p>
+                                        <p id="backBlood" class="hidden"><strong>Blood:</strong> <span id="backBloodText"></span></p>
+                                        <p id="backLocation" class="hidden"><strong>Location:</strong> <span id="backLocationText"></span></p>
+                                        <p id="backSkills" class="hidden"><strong>Skills:</strong> <span id="backSkillsText"></span></p>
+                                    </div>
+                                    
+                                    <!-- Right Column: Contact -->
+                                    <div class="back-col">
+                                        <p id="backMobile" class="hidden"><span class="icon">📞</span> <span id="backMobileText"></span></p>
+                                        <p id="backEmail" class="hidden"><span class="icon">✉️</span> <span id="backEmailText"></span></p>
+                                        <p id="backWebsite" class="hidden"><span class="icon">🌐</span> <span id="backWebsiteText"></span></p>
+                                    </div>
                                 </div>
                                 
-                                <div class="card-divider" style="width: 60%;"></div>
+                                <div class="card-divider" style="width: 100%; margin-top: 10px;"></div>
                                 
-                                <p class="card-tagline" style="margin-top: 20px;">Your Identity, Digitally.</p>
-                                <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                                <p class="card-tagline" style="margin-top: 10px; font-size: 12px;">Your Identity, Digitally.</p>
+                                <p class="card-branding" style="font-size: 10px;">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Format & Download -->
-                    <div class="format-selector">
-                        <label>Format:</label>
-                        <select id="formatSelect">
-                            <option value="vertical">Vertical (9:16)</option>
-                            <option value="horizontal">Horizontal (16:9)</option>
-                        </select>
-                    </div>
-
-                    <button id="downloadBtn" class="btn btn-primary" style="margin-top: 16px;">Download Card</button>
+                    <!-- Download Button Only -->
+                    <button id="downloadBtn" class="btn btn-primary" style="margin-top: 16px; width: 100%; max-width: 320px;">Download Card</button>
                 </div>
             </div>
 
