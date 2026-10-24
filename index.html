@@ -20,15 +20,6 @@
 </head>
 <body>
 
-    <!-- Install App Banner (Hidden by default) -->
-    <div id="installBanner" class="install-banner hidden">
-        <div class="install-content">
-            <span>📥 Install Digital ID App for quick access</span>
-            <button id="installBtn" class="btn-install">Install</button>
-            <button id="closeInstallBtn" class="btn-close">✕</button>
-        </div>
-    </div>
-
     <div class="container fade-in">
         
         <!-- Brand Header -->
@@ -44,7 +35,7 @@
             <div class="card-section">
                 <div class="sample-card-wrapper">
                     <div class="card-photo-ring">
-                        <!-- MAKE SURE TO ADD YOUR PHOTO AT THIS PATH -->
+                        <!-- MAKE SURE YOUR PHOTO IS AT THIS PATH -->
                         <img src="assets/sample-profile.jpg" alt="Masina Venkata Surendra" class="sample-photo">
                     </div>
                     
@@ -68,6 +59,13 @@
             <!-- Right Side: Options & Actions -->
             <div class="options-section">
                 
+                <!-- Install App Button (Hidden by default, shown via JS) -->
+                <div id="installBtnContainer" class="install-btn-container hidden">
+                    <button id="installBtn" class="btn btn-install">
+                        📥 Install Digital ID App
+                    </button>
+                </div>
+
                 <div class="actions-container">
                     <a href="generator.html" class="btn btn-primary">Create Your Digital ID — Free</a>
                     <a href="#" class="btn btn-secondary">Premium Services</a>
@@ -105,53 +103,39 @@
 
         // 2. PWA Install Logic
         let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
+        const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
-        const closeInstallBtn = document.getElementById('closeInstallBtn');
 
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
-            // Stash the event so it can be triggered later.
             deferredPrompt = e;
             
-            // Show the install banner
-            installBanner.classList.remove('hidden');
+            // Show the install button
+            installBtnContainer.classList.remove('hidden');
         });
 
         // Handle Install Button Click
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // Show the install prompt
                 deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
                 const { outcome } = await deferredPrompt.userChoice;
                 console.log(`User response to the install prompt: ${outcome}`);
-                // We've used the prompt, and can't use it again, throw it away
                 deferredPrompt = null;
-                // Hide banner
-                installBanner.classList.add('hidden');
+                // Hide button immediately after click
+                installBtnContainer.classList.add('hidden');
             }
-        });
-
-        // Handle Close Button Click (If user doesn't want to install now)
-        closeInstallBtn.addEventListener('click', () => {
-            installBanner.classList.add('hidden');
         });
 
         // Listen for the appinstalled event
         window.addEventListener('appinstalled', () => {
-            // Log install to analytics
             console.log('INSTALL: Success');
-            // Hide the banner if it's still visible
-            installBanner.classList.add('hidden');
+            installBtnContainer.classList.add('hidden');
         });
 
         // 3. Auto-Hide Logic if already installed (Standalone Mode)
         if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-            // App is running in standalone mode (already installed)
-            installBanner.classList.add('hidden');
+            installBtnContainer.classList.add('hidden');
         }
     </script>
 </body>
