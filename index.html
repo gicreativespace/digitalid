@@ -131,42 +131,87 @@
             });
         }
 
-        // 2. Direct Install Logic
+        // 2. PWA Install Logic
         let deferredPrompt;
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // Show button on load
-        if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
-            installBtnContainer.classList.remove('hidden');
-        }
+        // Show button after 1 second (Forces it to appear for testing)
+        setTimeout(() => {
+            if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
+                installBtnContainer.classList.remove('hidden');
+            }
+        }, 1000);
 
-        // Capture the browser prompt
+        // Capture the native prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('Native Install Prompt is Ready');
+            console.log('Install prompt ready');
         });
 
-        // Click action
+        // Click Action for Install
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // Directly show the browser's install dialog
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User choice: ${outcome}`);
                 deferredPrompt = null;
                 installBtnContainer.classList.add('hidden');
             } else {
-                // If the browser doesn't fire the event (e.g., testing on localhost without proper setup)
-                console.log("Prompt not available. Ensure you are on HTTPS/Localhost.");
-                // We do NOT show the old alert instructions anymore.
+                alert("Please use the browser menu (3 dots) and select 'Add to Home Screen' or 'Install App'.\n\n(Note: The automatic prompt works best on hosted HTTPS sites, not local files).");
             }
         });
 
         window.addEventListener('appinstalled', () => {
             installBtnContainer.classList.add('hidden');
         });
+
+        // 3. Settings Menu Logic
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsDropdown = document.getElementById('settingsDropdown');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsDropdown.classList.toggle('hidden');
+            });
+        }
+
+        if (closeSettingsBtn) {
+            closeSettingsBtn.addEventListener('click', () => {
+                settingsDropdown.classList.add('hidden');
+            });
+        }
+
+        // Close settings when clicking outside
+        window.addEventListener('click', (e) => {
+            if (settingsDropdown && !settingsDropdown.contains(e.target) && e.target !== settingsBtn) {
+                settingsDropdown.classList.add('hidden');
+            }
+        });
+
+        // 4. Clear Cache Logic (Refresh App)
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        if (clearCacheBtn) {
+            clearCacheBtn.addEventListener('click', async () => {
+                if ('caches' in window) {
+                    try {
+                        const cacheNames = await caches.keys();
+                        await Promise.all(
+                            cacheNames.map(name => caches.delete(name))
+                        );
+                        alert("Cache cleared successfully! App will now reload.");
+                        window.location.reload();
+                    } catch (err) {
+                        console.error('Error clearing cache:', err);
+                        alert("Failed to clear cache.");
+                    }
+                } else {
+                    window.location.reload(); // Fallback
+                }
+            });
+        }
     </script>
 </body>
 </html>
