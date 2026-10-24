@@ -49,7 +49,7 @@ function loadFormData() {
         updateRoleFields();
         updateCard();
     } else {
-        updateRoleFields(); // Initial load
+        updateRoleFields();
     }
 }
 
@@ -137,7 +137,7 @@ function updateCard() {
     toggleFieldWithIcon('bEmail', 'bEmailText', email);
     toggleFieldWithIcon('bWebsite', 'bWebsiteText', website);
 
-    // Auto-Fit Font Logic (ఫాంట్ సైజ్ ఆటోమేటిక్‌గా మారడం)
+    // Auto-Fit Font Logic
     adjustFontSize();
 
     // Auto-Save Data
@@ -163,22 +163,22 @@ function toggleFieldWithIcon(wrapperId, textId, value) {
     }
 }
 
-// 3.1 Auto-Fit Font Size Function
+// 3.1 Auto-Fit Font Size Function (Updated for Email/Website)
 function adjustFontSize() {
-    // పేరు పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
+    // 1. పేరు పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
     const nameEls = [document.getElementById('cardName'), document.getElementById('modernName')];
     nameEls.forEach(el => {
         const textLength = el.textContent.length;
         if (textLength > 24) {
-            el.style.fontSize = '14px'; // చాలా పొడవైతే
+            el.style.fontSize = '14px';
         } else if (textLength > 18) {
-            el.style.fontSize = '16px'; // కొంచెం పొడవైతే
+            el.style.fontSize = '16px';
         } else {
-            el.style.fontSize = '18px'; // సాధారణం
+            el.style.fontSize = '18px';
         }
     });
 
-    // Role/Designation పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
+    // 2. Role/Designation పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
     const roleEls = [document.getElementById('cardRole1'), document.getElementById('modernRole1')];
     roleEls.forEach(el => {
         if (el.textContent.length > 25) {
@@ -187,6 +187,22 @@ function adjustFontSize() {
             el.style.fontSize = '10px';
         }
     });
+
+    // 3. Email మరియు Website ఒకే లైన్‌లో ఇమిడేలా ఫాంట్ సైజ్ మార్చడం (Modern Back)
+    const emailEl = document.getElementById('bEmailText');
+    const webEl = document.getElementById('bWebsiteText');
+    
+    if (emailEl && emailEl.textContent.length > 20) {
+        emailEl.style.fontSize = '8.5px';
+    } else if (emailEl) {
+        emailEl.style.fontSize = '10px';
+    }
+
+    if (webEl && webEl.textContent.length > 20) {
+        webEl.style.fontSize = '8.5px';
+    } else if (webEl) {
+        webEl.style.fontSize = '10px';
+    }
 }
 
 // 4. Photo Upload & Crop
