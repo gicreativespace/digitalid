@@ -28,10 +28,22 @@
 </head>
 <body>
 
-    <!-- Top Bar -->
-    <div class="top-nav">
-        <a href="index.html" class="back-btn">← Back</a>
+    <!-- Top Right Settings Menu -->
+    <div class="top-settings-wrapper">
         <button id="settingsBtn" class="settings-icon">⚙️</button>
+        <div id="settingsDropdown" class="settings-dropdown hidden">
+            <button id="clearCacheBtn" class="dropdown-item">
+                🔄 Refresh App (Clear Cache)
+            </button>
+            <button id="closeSettingsBtn" class="dropdown-item close-item">
+                ❌ Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Bar (Back Button) -->
+    <div class="top-nav" style="justify-content: flex-start; padding-top: 16px;">
+        <a href="index.html" class="back-btn">← Back</a>
     </div>
 
     <div class="generator-container">
