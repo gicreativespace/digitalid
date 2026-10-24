@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital ID - Your Identity, Digitally</title>
     
+    <!-- Favicon (Bypass 404 error) -->
+    <link rel="icon" href="data:,">
+
     <!-- PWA Manifest & Theme -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1F3D2B">
@@ -24,7 +27,9 @@
         
         <!-- Brand Header -->
         <header class="brand-header">
+            <div class="header-line"></div>
             <h1>DIGITAL ID</h1>
+            <div class="header-line"></div>
             <p>Your Identity, Digitally.</p>
         </header>
 
@@ -34,9 +39,13 @@
             <!-- Left Side: Sample Card Preview -->
             <div class="card-section">
                 <div class="sample-card-wrapper">
+                    
                     <div class="card-photo-ring">
-                        <!-- MAKE SURE YOUR PHOTO IS AT THIS PATH -->
-                        <img src="assets/sample-profile.jpg" alt="Masina Venkata Surendra" class="sample-photo">
+                        <!-- Photo with Error Bypass (Shows default if image fails) -->
+                        <img src="assets/sample-profile.jpg" 
+                             alt="Masina Venkata Surendra" 
+                             class="sample-photo"
+                             onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150';">
                     </div>
                     
                     <h2 class="card-name">Masina Venkata Surendra</h2>
@@ -46,20 +55,24 @@
                     <div class="card-divider"></div>
                     
                     <div class="card-contact">
-                        <p>📱 +91 8985361991</p>
-                        <p>✉ surendramasina@gmail.com</p>
-                        <p>🌐 www.gicreativespace.com</p>
+                        <p><span class="icon">📞</span> +91 8985361991</p>
+                        <p><span class="icon">✉️</span> surendramasina@gmail.com</p>
+                        <p><span class="icon">🌐</span> www.gicreativespace.com</p>
                     </div>
                     
-                    <div class="card-rule"></div>
+                    <div class="card-divider bottom-div"></div>
+                    
                     <p class="card-tagline">Your Identity, Digitally.</p>
+                    
+                    <!-- Card Footer Branding -->
+                    <p class="card-branding">An initiative of @valiass team</p>
                 </div>
             </div>
 
             <!-- Right Side: Options & Actions -->
             <div class="options-section">
                 
-                <!-- Install App Button (Hidden by default, shown via JS) -->
+                <!-- Install App Button (Hidden by default, Outline style) -->
                 <div id="installBtnContainer" class="install-btn-container hidden">
                     <button id="installBtn" class="btn btn-install">
                         📥 Install Digital ID App
@@ -71,8 +84,9 @@
                     <a href="#" class="btn btn-secondary">Premium Services</a>
                 </div>
 
+                <!-- Sign In as Forest Green Box -->
                 <div class="sign-in-container">
-                    <a href="#" class="sign-in-link">Already have an ID? Sign In</a>
+                    <a href="#" class="btn btn-signin">Already have an ID? Sign In</a>
                 </div>
 
                 <div class="video-section">
@@ -86,6 +100,11 @@
                 </footer>
 
             </div>
+        </div>
+        
+        <!-- Page Bottom Branding -->
+        <div class="page-footer">
+            An initiative of @valiass team
         </div>
 
     </div>
@@ -106,34 +125,31 @@
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // Listen for the beforeinstallprompt event
+        // Show Install Button
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            
-            // Show the install button
             installBtnContainer.classList.remove('hidden');
         });
 
-        // Handle Install Button Click
+        // Install Button Click
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
+                console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
-                // Hide button immediately after click
-                installBtnContainer.classList.add('hidden');
+                installBtnContainer.classList.add('hidden'); // Auto-hide after click
             }
         });
 
-        // Listen for the appinstalled event
+        // Auto-hide on successful install
         window.addEventListener('appinstalled', () => {
-            console.log('INSTALL: Success');
+            console.log('App Installed Successfully');
             installBtnContainer.classList.add('hidden');
         });
 
-        // 3. Auto-Hide Logic if already installed (Standalone Mode)
+        // Auto-hide if already installed (Standalone Mode)
         if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
             installBtnContainer.classList.add('hidden');
         }
