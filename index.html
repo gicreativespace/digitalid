@@ -126,78 +126,46 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(registration => console.log('SW registered:', registration))
+                    .then(registration => console.log('SW registered'))
                     .catch(error => console.log('SW registration failed:', error));
             });
         }
 
-        // 2. PWA Install Logic
+        // 2. Direct Install Logic
         let deferredPrompt;
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // Force show button after 1 second (for testing/localhost)
-        setTimeout(() => {
-            if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
-                installBtnContainer.classList.remove('hidden');
-            }
-        }, 1000);
+        // Show button on load
+        if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
+            installBtnContainer.classList.remove('hidden');
+        }
 
+        // Capture the browser prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
+            console.log('Native Install Prompt is Ready');
         });
 
+        // Click action
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
+                // Directly show the browser's install dialog
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User choice: ${outcome}`);
                 deferredPrompt = null;
                 installBtnContainer.classList.add('hidden');
             } else {
-                alert("To install this app:\n\n1. Tap the browser menu (3 dots).\n2. Select 'Add to Home Screen' or 'Install App'.");
+                // If the browser doesn't fire the event (e.g., testing on localhost without proper setup)
+                console.log("Prompt not available. Ensure you are on HTTPS/Localhost.");
+                // We do NOT show the old alert instructions anymore.
             }
         });
 
         window.addEventListener('appinstalled', () => {
             installBtnContainer.classList.add('hidden');
-        });
-
-        // 3. Settings Menu Logic
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsDropdown = document.getElementById('settingsDropdown');
-        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-
-        settingsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            settingsDropdown.classList.toggle('hidden');
-        });
-
-        closeSettingsBtn.addEventListener('click', () => {
-            settingsDropdown.classList.add('hidden');
-        });
-
-        // Close dropdown when clicking outside
-        window.addEventListener('click', (e) => {
-            if (!settingsDropdown.contains(e.target) && e.target !== settingsBtn) {
-                settingsDropdown.classList.add('hidden');
-            }
-        });
-
-        // 4. Clear Cache Logic
-        document.getElementById('clearCacheBtn').addEventListener('click', async () => {
-            if ('caches' in window) {
-                try {
-                    const cacheNames = await caches.keys();
-                    await Promise.all(
-                        cacheNames.map(name => caches.delete(name))
-                    );
-                    alert("Cache cleared successfully! App will now reload.");
-                    window.location.reload();
-                } catch (err) {
-                    console.error('Error clearing cache:', err);
-                }
-            }
         });
     </script>
 </body>
