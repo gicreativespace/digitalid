@@ -190,6 +190,12 @@ body {
     margin-top: auto;
 }
 
+/* --- Install Button Container --- */
+.install-btn-container {
+    width: 100%;
+    margin-bottom: 12px; /* Space between install and free button */
+}
+
 /* --- Action Buttons & Links --- */
 .actions-container {
     width: 100%;
@@ -236,6 +242,28 @@ body {
     transform: translateY(-2px);
 }
 
+/* --- Install Button Specific Style --- */
+.btn-install {
+    background-color: var(--white);
+    color: var(--forest-green);
+    border: 2px solid var(--champagne);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-install:hover {
+    background-color: rgba(200, 169, 106, 0.1);
+    transform: translateY(-2px);
+}
+
+/* --- Utility Class --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- Sign In & Video Section --- */
 .sign-in-container {
     width: 100%;
     text-align: center;
@@ -254,7 +282,6 @@ body {
     text-decoration: underline;
 }
 
-/* --- Demo Video Section --- */
 .video-section {
     width: 100%;
     background-color: rgba(200, 169, 106, 0.1);
@@ -310,58 +337,6 @@ body {
     color: var(--champagne);
 }
 
-/* --- PWA Install Banner --- */
-.install-banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--forest-green);
-    color: var(--white);
-    padding: 12px 20px;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-}
-
-.install-banner.hidden {
-    transform: translateY(-100%); /* Slide up to hide */
-}
-
-.install-content {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 14px;
-}
-
-.btn-install {
-    background-color: var(--champagne);
-    color: var(--forest-green);
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 16px;
-    cursor: pointer;
-    opacity: 0.7;
-}
-
-.btn-close:hover {
-    opacity: 1;
-}
-
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
     .main-layout {
@@ -379,15 +354,10 @@ body {
     }
 
     .actions-container, 
+    .install-btn-container,
     .sign-in-container, 
     .video-section, 
     .footer-links {
         max-width: 320px;
-    }
-    
-    .install-content {
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
     }
 }
