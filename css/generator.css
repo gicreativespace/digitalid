@@ -214,7 +214,6 @@
     gap: 10px;
 }
 
-/* టాప్ సెక్షన్ టెక్స్ట్ ఒకే లైన్‌లో ఇమిడేలా */
 #modernBack .back-row p {
     display: flex;
     align-items: flex-start;
