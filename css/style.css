@@ -23,7 +23,7 @@ body {
     background-color: var(--ivory);
     color: var(--forest-green);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     padding: 24px 16px;
@@ -32,10 +32,11 @@ body {
 /* --- Container & Animation --- */
 .container {
     width: 100%;
-    max-width: 420px;
+    max-width: 900px; /* Increased for side-by-side */
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 .fade-in {
@@ -50,7 +51,8 @@ body {
 /* --- Brand Header --- */
 .brand-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 40px;
+    width: 100%;
 }
 
 .brand-header h1 {
@@ -68,6 +70,33 @@ body {
     text-transform: uppercase;
 }
 
+/* --- Main Layout (Side by Side) --- */
+.main-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Left Side: Card Section --- */
+.card-section {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Align card to the center gap */
+}
+
+/* --- Right Side: Options Section --- */
+.options-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Align options to the left */
+    max-width: 350px;
+}
+
 /* --- Sample Card Design (9:16 Ratio) --- */
 .sample-card-wrapper {
     width: 100%;
@@ -80,7 +109,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 36px;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -162,13 +190,13 @@ body {
     margin-top: auto;
 }
 
-/* --- Action Buttons --- */
+/* --- Action Buttons & Links --- */
 .actions-container {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 28px;
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
 .btn {
@@ -208,6 +236,24 @@ body {
     transform: translateY(-2px);
 }
 
+.sign-in-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.sign-in-link {
+    color: var(--forest-green);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.sign-in-link:hover {
+    text-decoration: underline;
+}
+
 /* --- Demo Video Section --- */
 .video-section {
     width: 100%;
@@ -242,11 +288,11 @@ body {
 
 /* --- Footer Links --- */
 .footer-links {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 12px;
-    align-items: center;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .footer-links a {
@@ -260,8 +306,88 @@ body {
     text-decoration: underline;
 }
 
-.sign-in-link {
-    color: var(--forest-green) !important;
+.footer-links .divider {
+    color: var(--champagne);
+}
+
+/* --- PWA Install Banner --- */
+.install-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--forest-green);
+    color: var(--white);
+    padding: 12px 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.install-banner.hidden {
+    transform: translateY(-100%); /* Slide up to hide */
+}
+
+.install-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+}
+
+.btn-install {
+    background-color: var(--champagne);
+    color: var(--forest-green);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
     font-weight: 600;
-    margin-top: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .card-section {
+        justify-content: center;
+    }
+
+    .options-section {
+        align-items: center;
+        width: 100%;
+    }
+
+    .actions-container, 
+    .sign-in-container, 
+    .video-section, 
+    .footer-links {
+        max-width: 320px;
+    }
+    
+    .install-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
 }
