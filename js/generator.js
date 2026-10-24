@@ -57,10 +57,8 @@ function loadFormData() {
 function updateRoleFields() {
     const role = document.getElementById('roleSelect').value;
     const container = document.getElementById('roleFieldsContainer');
-    const field1Group = document.getElementById('roleField1Group');
     const field1Label = document.getElementById('roleField1Label');
     const field1Input = document.getElementById('roleField1Input');
-    const field2Group = document.getElementById('roleField2Group');
     const field2Label = document.getElementById('roleField2Label');
     const field2Input = document.getElementById('roleField2Input');
 
@@ -163,7 +161,7 @@ function toggleFieldWithIcon(wrapperId, textId, value) {
     }
 }
 
-// 3.1 Auto-Fit Font Size Function (Updated for Email/Website)
+// 3.1 Auto-Fit Font Size Function
 function adjustFontSize() {
     // 1. పేరు పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
     const nameEls = [document.getElementById('cardName'), document.getElementById('modernName')];
@@ -301,8 +299,16 @@ function setColor(colorName) {
     document.querySelector(`.color-swatch[data-color="${colorName}"]`).classList.add('active');
 }
 
-// 8. Download Logic
+// 8. Download Logic with Validation & Auto-Clear
 document.getElementById('downloadBtn').addEventListener('click', async function() {
+    const name = document.getElementById('nameInput').value.trim();
+    
+    // Validation: Name is required
+    if (!name) {
+        alert("Please enter your Name before downloading the card.");
+        return;
+    }
+
     const wrapper = document.getElementById('downloadWrapper');
     const originalText = this.textContent;
     this.textContent = "Generating... Please wait";
@@ -318,6 +324,11 @@ document.getElementById('downloadBtn').addEventListener('click', async function(
         link.download = `DigitalID.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
+        
+        // Auto-Clear Local Storage after successful download
+        localStorage.removeItem('digitalIdDraft');
+        console.log("Draft cleared after download.");
+
     } catch (error) {
         console.error("Error:", error);
         alert("Failed to generate image. Please try again.");
@@ -363,3 +374,38 @@ window.addEventListener('click', function(e) {
     const modal = document.getElementById('contactModal'); 
     if (e.target === modal) closeContactPopup(); 
 });
+
+// 12. Top Settings Logic
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsDropdown = document.getElementById('settingsDropdown');
+const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+if (settingsBtn) {
+    settingsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        settingsDropdown.classList.toggle('hidden');
+    });
+}
+
+if (closeSettingsBtn) {
+    closeSettingsBtn.addEventListener('click', () => {
+        settingsDropdown.classList.add('hidden');
+    });
+}
+
+// Close settings when clicking outside
+window.addEventListener('click', (e) => {
+    if (settingsDropdown && !settingsDropdown.contains(e.target) && e.target !== settingsBtn) {
+        settingsDropdown.classList.add('hidden');
+    }
+});
+
+// Refresh App (Clear Cache)
+const clearCacheBtn = document.getElementById('clearCacheBtn');
+if (clearCacheBtn) {
+    clearCacheBtn.addEventListener('click', async () => {
+        if ('caches' in window) {
+            try {
+                const cacheNames = await caches.keys();
+                await Promise.all(
+                    cacheNames.map(name => caches.delete
