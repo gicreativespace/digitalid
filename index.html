@@ -136,29 +136,30 @@
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // Show button after 1 second (Forces it to appear for testing)
-        setTimeout(() => {
-            if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
-                installBtnContainer.classList.remove('hidden');
-            }
-        }, 1000);
+        // Show button if not in standalone mode
+        if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
+            installBtnContainer.classList.remove('hidden');
+        }
 
         // Capture the native prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('Install prompt ready');
+            console.log('Install prompt ready (Native Prompt Available)');
         });
 
         // Click Action for Install
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
+                // If prompt is available, show it directly
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User choice: ${outcome}`);
                 deferredPrompt = null;
                 installBtnContainer.classList.add('hidden');
             } else {
-                alert("Please use the browser menu (3 dots) and select 'Add to Home Screen' or 'Install App'.\n\n(Note: The automatic prompt works best on hosted HTTPS sites, not local files).");
+                // Fallback if prompt is not available
+                alert("Direct install is not available right now.\n\nPlease open your browser menu (3 dots) and tap 'Install App' or 'Add to Home Screen'.\n\n(Note: Direct install works perfectly on HTTPS/live hosting).");
             }
         });
 
