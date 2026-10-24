@@ -57,13 +57,27 @@
 }
 
 /* --- Form Elements --- */
+.form-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--forest-green);
+    border-bottom: 1px solid var(--champagne);
+    padding-bottom: 6px;
+    margin: 24px 0 16px 0;
+}
+.form-section-title:first-child { margin-top: 0; }
+
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--forest-green); margin-bottom: 6px; }
-.form-group input[type="text"], .form-group input[type="email"] {
+.form-group input[type="text"], .form-group input[type="email"], .form-group select {
     width: 100%; padding: 10px 12px; border: 1px solid rgba(200, 169, 106, 0.4); border-radius: 8px;
     font-family: 'Inter', sans-serif; font-size: 14px; color: var(--forest-green); background: var(--ivory); outline: none; transition: border-color 0.2s;
 }
-.form-group input:focus { border-color: var(--champagne); }
+.form-group input:focus, .form-group select:focus { border-color: var(--champagne); }
+
+.dob-blood-group { display: flex; gap: 10px; }
+.dob-blood-group input { flex: 1; }
+
 .photo-buttons { display: flex; gap: 10px; }
 .btn-upload {
     flex: 1; padding: 10px; text-align: center; background: var(--ivory); border: 1px dashed var(--champagne); border-radius: 8px;
@@ -72,30 +86,36 @@
 .btn-upload:hover { background: rgba(200, 169, 106, 0.1); }
 
 /* --- Selectors --- */
-.theme-selector, .layout-selector { display: flex; gap: 8px; flex-wrap: wrap; }
-.theme-btn, .layout-btn {
+.layout-selector { display: flex; gap: 8px; margin-bottom: 10px; }
+.layout-btn {
     padding: 8px 12px; border: 1px solid var(--champagne); background: transparent; border-radius: 20px;
     font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; color: var(--forest-green); transition: all 0.2s;
 }
-.theme-btn.active, .layout-btn.active { background: var(--forest-green); color: var(--white); border-color: var(--forest-green); }
+.layout-btn.active { background: var(--forest-green); color: var(--white); border-color: var(--forest-green); }
 
-/* --- Colour Selector --- */
-.color-selector { display: flex; gap: 10px; margin-top: 6px; }
+.theme-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+.theme-btn {
+    padding: 8px 12px; border: 1px solid var(--champagne); background: transparent; border-radius: 20px;
+    font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; color: var(--forest-green); transition: all 0.2s;
+}
+.theme-btn.active { background: var(--forest-green); color: var(--white); border-color: var(--forest-green); }
+
+.color-selector { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
 .color-swatch {
     width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s, border 0.2s;
 }
 .color-swatch:hover { transform: scale(1.1); }
-.color-swatch.active { border-color: var(--champagne); transform: scale(1.15); }
+.color-swatch.active { border-color: var(--champagne); transform: scale(1.15); box-shadow: 0 0 0 2px var(--white); }
 
 /* --- Download Wrapper --- */
 .download-wrapper {
     display: flex; flex-direction: column; align-items: center; padding: 10px; background-color: var(--ivory); border-radius: 20px; width: 100%;
+    max-width: 340px;
 }
 
 /* --- The ID Card Design --- */
 .id-card {
-    width: 320px;
-    aspect-ratio: 9 / 16;
+    width: 100%;
     background-color: var(--white);
     border: 1px solid var(--champagne);
     border-radius: 20px;
@@ -109,54 +129,88 @@
     transition: all 0.3s ease;
 }
 
-/* Card Header */
+/* Classic Card Specific */
+#classicCard { aspect-ratio: 9 / 16; }
+
+/* Modern Cards Specific */
+.modern-wrapper { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+#modernFront, #modernBack { aspect-ratio: 16 / 9; }
+
+/* Card Content */
 .card-header {
     display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
     font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 3px; margin-bottom: 16px;
 }
 .card-header .line { flex: 1; height: 1px; background: var(--champagne); }
 
-/* Photo & Text */
 .card-photo-container {
     width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--champagne); padding: 3px; margin-bottom: 12px; background: var(--ivory);
 }
 .card-photo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .card-name { font-family: 'Playfair Display', serif; font-size: 18px; text-align: center; margin-bottom: 4px; }
 .card-designation { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--champagne); font-weight: 600; margin-bottom: 4px; }
-.card-org { font-size: 12px; margin-bottom: 12px; }
+.card-org { font-size: 12px; margin-bottom: 12px; text-align: center; }
 .card-divider { width: 80%; height: 1px; background: var(--champagne); opacity: 0.5; margin: 10px 0; }
 .card-contact { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
 .card-contact p { display: flex; align-items: center; gap: 8px; }
 
-/* Extra Details */
 .card-extra-details { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; margin-bottom: 4px; }
+.row-details { display: flex; justify-content: flex-start; gap: 12px; }
 .card-extra-details p { display: flex; align-items: center; gap: 8px; }
 
 .hidden { display: none !important; }
+
 .card-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: var(--champagne); margin-top: auto; margin-bottom: 6px; transition: color 0.3s; }
 .card-branding { font-size: 9px; opacity: 0.7; transition: color 0.3s; }
 
+/* Modern Layout Specifics */
+#modernFront { flex-direction: row; justify-content: flex-start; gap: 20px; padding: 20px; }
+#modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; flex-shrink: 0; }
+#modernFront .modern-text { display: flex; flex-direction: column; justify-content: center; text-align: left; }
+#modernFront .card-name { text-align: left; font-size: 20px; margin: 0; }
+#modernFront .card-designation { text-align: left; margin: 0; }
+#modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
+
+#modernBack { padding: 20px; }
+.back-content { display: flex; flex-direction: column; height: 100%; justify-content: center; }
+.back-columns { display: flex; justify-content: space-between; width: 100%; }
+.back-col { display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
+.back-col p { display: flex; align-items: center; gap: 8px; }
+
 /* --- Accent Colors --- */
-.accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; }
-.color-green { --accent-color: #1F3D2B; }
-.color-gold { --accent-color: #C8A96A; }
-.color-navy { --accent-color: #2C3E50; }
-.color-maroon { --accent-color: #800000; }
-.color-charcoal { --accent-color: #36454F; }
+.accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; transition: color 0.3s; }
+.color-green { --accent-color: #6B8E78; }
+.color-gold { --accent-color: #D4AF37; }
+.color-blue { --accent-color: #6C8EBF; }
+.color-rose { --accent-color: #B56B6B; }
+.color-slate { --accent-color: #7A8B99; }
+.color-white { --accent-color: #FFFFFF; }
+.color-black { --accent-color: #333333; }
 
 /* --- Themes --- */
+/* Classic Theme */
 .theme-classic { background-color: var(--white); color: var(--forest-green); }
+.theme-classic .accent-icon { color: var(--accent-color); }
+
+/* Dark Theme */
+.theme-dark { background-color: var(--forest-green); color: var(--white); border-color: var(--forest-light); }
+.theme-dark .card-header, .theme-dark .card-name, .theme-dark .card-org, .theme-dark .card-contact, .theme-dark .card-extra-details, .theme-dark .back-col { color: var(--white); }
+.theme-dark .card-photo-container { background-color: var(--forest-light); border-color: var(--champagne); }
+.theme-dark .card-tagline { color: var(--champagne); }
+.theme-dark .valiass-link { color: var(--white) !important; }
+.theme-dark .accent-icon { color: var(--accent-color); }
+
+/* Minimal Theme */
 .theme-minimal { background-color: #FCFBF7; color: #4A4A4A; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 .theme-minimal .card-header { color: var(--forest-green); }
 .theme-minimal .card-divider { background-color: #E0E0E0; }
 .theme-minimal .card-name { color: var(--forest-green); }
-.theme-dark { background-color: var(--forest-green); color: var(--white); border-color: var(--forest-light); }
-.theme-dark .card-header, .theme-dark .card-name, .theme-dark .card-org, .theme-dark .card-contact, .theme-dark .card-extra-details { color: var(--white); }
-.theme-dark .card-photo-container { background-color: var(--forest-light); border-color: var(--champagne); }
-.theme-dark .card-tagline { color: var(--champagne); }
-.theme-dark .valiass-link { color: var(--white) !important; }
+.theme-minimal .accent-icon { color: var(--accent-color); }
+
+/* Earthy Theme */
 .theme-earthy { background-color: #F4ECE1; color: #5D4037; border-color: #D7CCC8; }
 .theme-earthy .card-header .line, .theme-earthy .card-divider { background-color: #BCAAA4; }
+.theme-earthy .accent-icon { color: var(--accent-color); }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
@@ -164,7 +218,9 @@
     .form-section { width: 100%; max-width: 100%; }
     .preview-section { width: 100%; max-width: 100%; margin-top: 20px; }
     .sticky-preview { position: relative; top: 0; }
-    .id-card { width: 100%; max-width: 320px; }
+    .download-wrapper { max-width: 100%; }
+    #classicCard { width: 100%; max-width: 320px; }
+    #modernFront, #modernBack { width: 100%; max-width: 380px; }
 }
 
 /* --- Top Nav & Links --- */
