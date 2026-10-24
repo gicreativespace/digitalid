@@ -23,6 +23,21 @@
 </head>
 <body>
 
+    <!-- Top Right Settings Menu -->
+    <div class="top-settings-wrapper">
+        <button id="settingsBtn" class="settings-icon">⚙️</button>
+        
+        <!-- Dropdown Menu (Hidden by default) -->
+        <div id="settingsDropdown" class="settings-dropdown hidden">
+            <button id="clearCacheBtn" class="dropdown-item">
+                🔄 Refresh App (Clear Cache)
+            </button>
+            <button id="closeSettingsBtn" class="dropdown-item close-item">
+                ❌ Close
+            </button>
+        </div>
+    </div>
+
     <div class="container fade-in">
         
         <!-- Brand Header -->
@@ -39,9 +54,8 @@
             <!-- Left Side: Sample Card Preview -->
             <div class="card-section">
                 <div class="sample-card-wrapper">
-                    
                     <div class="card-photo-ring">
-                        <!-- Photo with Error Bypass (Shows default if image fails) -->
+                        <!-- Photo with Error Bypass -->
                         <img src="assets/sample-profile.jpg" 
                              alt="Masina Venkata Surendra" 
                              class="sample-photo"
@@ -63,8 +77,6 @@
                     <div class="card-divider bottom-div"></div>
                     
                     <p class="card-tagline">Your Identity, Digitally.</p>
-                    
-                    <!-- Card Footer Branding -->
                     <p class="card-branding">An initiative of @valiass team</p>
                 </div>
             </div>
@@ -72,7 +84,7 @@
             <!-- Right Side: Options & Actions -->
             <div class="options-section">
                 
-                <!-- Install App Button (Hidden by default, Outline style) -->
+                <!-- Install App Button (Top of options list) -->
                 <div id="installBtnContainer" class="install-btn-container hidden">
                     <button id="installBtn" class="btn btn-install">
                         📥 Install Digital ID App
@@ -81,10 +93,9 @@
 
                 <div class="actions-container">
                     <a href="generator.html" class="btn btn-primary">Create Your Digital ID — Free</a>
-                    <a href="#" class="btn btn-secondary">Premium Services - Register </a>
+                    <a href="#" class="btn btn-secondary">Premium Services</a>
                 </div>
 
-                <!-- Sign In as Forest Green Box -->
                 <div class="sign-in-container">
                     <a href="#" class="btn btn-signin">Already have an ID? Sign In</a>
                 </div>
@@ -109,7 +120,7 @@
 
     </div>
 
-    <!-- Service Worker Registration & PWA Install Logic -->
+    <!-- Service Worker Registration & PWA Logic -->
     <script>
         // 1. Register Service Worker
         if ('serviceWorker' in navigator) {
@@ -120,50 +131,74 @@
             });
         }
 
-        // 2. PWA Install Logic with Fallback
+        // 2. PWA Install Logic
         let deferredPrompt;
         const installBtnContainer = document.getElementById('installBtnContainer');
         const installBtn = document.getElementById('installBtn');
 
-        // FOR TESTING: Always show the button after 1 second (if not installed)
+        // Force show button after 1 second (for testing/localhost)
         setTimeout(() => {
             if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
                 installBtnContainer.classList.remove('hidden');
             }
         }, 1000);
 
-        // Capture the prompt if available
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('Install prompt ready');
         });
 
-        // Button Click Action
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // If browser supports prompt, show it
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
                 installBtnContainer.classList.add('hidden');
             } else {
-                // Fallback: If prompt is not available (e.g., iOS or localhost issue)
-                alert("To install the app:\n\n1. Tap the browser menu (3 dots).\n2. Select 'Add to Home Screen' or 'Install App'.");
+                alert("To install this app:\n\n1. Tap the browser menu (3 dots).\n2. Select 'Add to Home Screen' or 'Install App'.");
             }
         });
 
-        // Auto-hide on successful install
         window.addEventListener('appinstalled', () => {
-            console.log('App Installed Successfully');
             installBtnContainer.classList.add('hidden');
         });
 
-        // Auto-hide if already opened as an App (Standalone Mode)
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-            installBtnContainer.classList.add('hidden');
-        }
+        // 3. Settings Menu Logic
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsDropdown = document.getElementById('settingsDropdown');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsDropdown.classList.toggle('hidden');
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsDropdown.classList.add('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', (e) => {
+            if (!settingsDropdown.contains(e.target) && e.target !== settingsBtn) {
+                settingsDropdown.classList.add('hidden');
+            }
+        });
+
+        // 4. Clear Cache Logic
+        document.getElementById('clearCacheBtn').addEventListener('click', async () => {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(
+                        cacheNames.map(name => caches.delete(name))
+                    );
+                    alert("Cache cleared successfully! App will now reload.");
+                    window.location.reload();
+                } catch (err) {
+                    console.error('Error clearing cache:', err);
+                }
+            }
+        });
     </script>
 </body>
 </html>
