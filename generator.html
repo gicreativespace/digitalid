@@ -39,6 +39,9 @@
             <!-- LEFT SIDE: FORM -->
             <div class="form-section">
                 
+                <!-- Section 1: Basic Info -->
+                <div class="form-section-title">1. Basic Info</div>
+                
                 <div class="form-group">
                     <label>Profile Photo</label>
                     <div class="photo-buttons">
@@ -47,6 +50,16 @@
                         <label for="cameraInput" class="btn-upload"><i class="fa-solid fa-camera"></i> Camera</label>
                         <input type="file" id="cameraInput" accept="image/*" capture="user" hidden>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Role</label>
+                    <select id="roleSelect" onchange="updateRoleFields()">
+                        <option value="personal">Personal</option>
+                        <option value="professional">Professional</option>
+                        <option value="student">Student</option>
+                        <option value="organization">Organization</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -59,11 +72,20 @@
                     <input type="text" id="designationInput" placeholder="Creative Soul" oninput="updateCard()">
                 </div>
 
-                <div class="form-group">
-                    <label>Organization</label>
-                    <input type="text" id="orgInput" placeholder="GI Creative Space" oninput="updateCard()">
+                <!-- Section 2: Role Specific -->
+                <div class="form-section-title">2. Role Details</div>
+                <div class="form-group" id="roleFieldGroup" style="display: none;">
+                    <label id="roleFieldLabel">Company Name</label>
+                    <input type="text" id="roleInput" placeholder="GI Creative Space" oninput="updateCard()">
+                </div>
+                <div class="form-group" id="websiteGroup">
+                    <label>Website</label>
+                    <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
                 </div>
 
+                <!-- Section 3: Contact & Extra -->
+                <div class="form-section-title">3. Contact & Extra</div>
+                
                 <div class="form-group">
                     <label>Mobile</label>
                     <input type="text" id="mobileInput" placeholder="+91 8985361991" oninput="updateCard()">
@@ -75,24 +97,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Website</label>
-                    <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
-                </div>
-
-                <!-- Extra Details (Simple) -->
-                <div class="form-group">
-                    <label>Date of Birth (DOB)</label>
-                    <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Blood Group</label>
-                    <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
+                    <label>Location (City)</label>
                     <input type="text" id="locationInput" placeholder="Hyderabad" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>DOB & Blood Group</label>
+                    <div class="dob-blood-group">
+                        <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
+                        <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()" style="max-width: 80px;">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -100,7 +114,30 @@
                     <input type="text" id="skillsInput" placeholder="UI/UX, Branding" oninput="updateCard()">
                 </div>
 
-                <!-- Theme Selector -->
+                <!-- Design Selection -->
+                <div class="form-section-title">4. Design</div>
+                
+                <div class="form-group">
+                    <label>Card Layout</label>
+                    <div class="layout-selector">
+                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('classic')">Classic (9:16)</button>
+                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('modern')">Modern (16:9)</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Accent Colour</label>
+                    <div class="color-selector">
+                        <div class="color-swatch active" data-color="green" style="background: #6B8E78;" onclick="setColor('green')"></div>
+                        <div class="color-swatch" data-color="gold" style="background: #D4AF37;" onclick="setColor('gold')"></div>
+                        <div class="color-swatch" data-color="blue" style="background: #6C8EBF;" onclick="setColor('blue')"></div>
+                        <div class="color-swatch" data-color="rose" style="background: #B56B6B;" onclick="setColor('rose')"></div>
+                        <div class="color-swatch" data-color="slate" style="background: #7A8B99;" onclick="setColor('slate')"></div>
+                        <div class="color-swatch" data-color="white" style="background: #FFFFFF; border: 1px solid #ccc;" onclick="setColor('white')"></div>
+                        <div class="color-swatch" data-color="black" style="background: #333333;" onclick="setColor('black')"></div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Select Theme</label>
                     <div class="theme-selector">
@@ -108,18 +145,6 @@
                         <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')">Dark</button>
                         <button class="theme-btn" data-theme="minimal" onclick="setTheme('minimal')">Minimal</button>
                         <button class="theme-btn" data-theme="earthy" onclick="setTheme('earthy')">Earthy</button>
-                    </div>
-                </div>
-
-                <!-- Colour Options -->
-                <div class="form-group">
-                    <label>Select Accent Colour</label>
-                    <div class="color-selector">
-                        <div class="color-swatch active" data-color="green" style="background: #1F3D2B;" onclick="setColor('green')"></div>
-                        <div class="color-swatch" data-color="gold" style="background: #C8A96A;" onclick="setColor('gold')"></div>
-                        <div class="color-swatch" data-color="navy" style="background: #2C3E50;" onclick="setColor('navy')"></div>
-                        <div class="color-swatch" data-color="maroon" style="background: #800000;" onclick="setColor('maroon')"></div>
-                        <div class="color-swatch" data-color="charcoal" style="background: #36454F;" onclick="setColor('charcoal')"></div>
                     </div>
                 </div>
             </div>
@@ -130,8 +155,8 @@
                     
                     <div id="downloadWrapper" class="download-wrapper">
                         
-                        <!-- THE CARD -->
-                        <div id="frontCard" class="id-card theme-classic color-green">
+                        <!-- CLASSIC CARD (9:16) -->
+                        <div id="classicCard" class="id-card theme-classic color-green layout-classic">
                             <div class="card-header">
                                 <span class="line"></span> DIGITAL ID <span class="line"></span>
                             </div>
@@ -142,7 +167,7 @@
                             
                             <h2 id="cardName" class="card-name">Your Name</h2>
                             <p id="cardDesignation" class="card-designation">Designation</p>
-                            <p id="cardOrg" class="card-org hidden">Organization</p>
+                            <p id="cardRole" class="card-org hidden">Organization</p>
                             
                             <div class="card-divider"></div>
                             
@@ -156,8 +181,10 @@
                             
                             <!-- Extra Details -->
                             <div class="card-extra-details">
-                                <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
-                                <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
+                                <div class="row-details">
+                                    <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
+                                    <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
+                                </div>
                                 <p id="cardLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="locationText"></span></p>
                                 <p id="cardSkills" class="hidden"><i class="fa-solid fa-wand-magic-sparkles accent-icon"></i> <span id="skillsText"></span></p>
                             </div>
@@ -166,6 +193,44 @@
                             
                             <p class="card-tagline">Your Identity, Digitally.</p>
                             <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                        </div>
+
+                        <!-- MODERN CARDS (Front & Back) - Hidden by default -->
+                        <div id="modernWrapper" class="modern-wrapper hidden">
+                            <!-- Modern Front -->
+                            <div id="modernFront" class="id-card theme-classic color-green layout-modern">
+                                <div class="card-photo-container">
+                                    <img id="modernPhoto" src="https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150" alt="Profile">
+                                </div>
+                                <div class="modern-text">
+                                    <h2 id="modernName" class="card-name">Your Name</h2>
+                                    <p id="modernDesignation" class="card-designation">Designation</p>
+                                    <p id="modernRole" class="card-org hidden">Organization</p>
+                                </div>
+                                <p class="card-branding" style="position: absolute; bottom: 10px; right: 10px;">An initiative of @valiass</p>
+                            </div>
+                            
+                            <!-- Modern Back -->
+                            <div id="modernBack" class="id-card theme-classic color-green layout-modern-back">
+                                <div class="back-content">
+                                    <div class="back-columns">
+                                        <div class="back-col">
+                                            <p id="bDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="bDobText"></span></p>
+                                            <p id="bBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bBloodText"></span></p>
+                                            <p id="bLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="bLocationText"></span></p>
+                                            <p id="bSkills" class="hidden"><i class="fa-solid fa-wand-magic-sparkles accent-icon"></i> <span id="bSkillsText"></span></p>
+                                        </div>
+                                        <div class="back-col">
+                                            <p id="bMobile" class="hidden"><i class="fa-solid fa-phone accent-icon"></i> <span id="bMobileText"></span></p>
+                                            <p id="bEmail" class="hidden"><i class="fa-solid fa-envelope accent-icon"></i> <span id="bEmailText"></span></p>
+                                            <p id="bWebsite" class="hidden"><i class="fa-solid fa-globe accent-icon"></i> <span id="bWebsiteText"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="card-divider" style="width: 100%; margin-top: 10px;"></div>
+                                    <p class="card-tagline" style="margin-top: 10px;">Your Identity, Digitally.</p>
+                                    <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
