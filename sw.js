@@ -1,4 +1,4 @@
-const CACHE_NAME = 'digital-id-v1';
+const CACHE_NAME = 'digital-id-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
