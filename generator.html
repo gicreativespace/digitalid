@@ -50,16 +50,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Select Role</label>
-                    <select id="roleSelect" onchange="updateRoleFields()">
-                        <option value="personal">Personal</option>
-                        <option value="professional">Professional</option>
-                        <option value="student">Student</option>
-                        <option value="organization">Organization</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <label>Name *</label>
                     <input type="text" id="nameInput" placeholder="Masina Venkata Surendra" oninput="updateCard()">
                 </div>
@@ -69,40 +59,9 @@
                     <input type="text" id="designationInput" placeholder="Creative Soul" oninput="updateCard()">
                 </div>
 
-                <!-- Dynamic Role Field -->
-                <div class="form-group" id="roleFieldGroup" style="display: none;">
-                    <label id="roleFieldLabel">Organization Name</label>
-                    <input type="text" id="roleInput" placeholder="GI Creative Space" oninput="updateCard()">
-                </div>
-
                 <div class="form-group">
-                    <label>Date of Birth (DOB)</label>
-                    <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Blood Group</label>
-                    <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Location (City)</label>
-                    <input type="text" id="locationInput" placeholder="Hyderabad" oninput="updateCard()">
-                </div>
-
-                <div class="form-group">
-                    <label>Full Address (Optional)</label>
-                    <div class="checkbox-group">
-                        <input type="text" id="addressInput" placeholder="123, Street Name..." oninput="updateCard()">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="showAddress" onchange="updateCard()"> Show on Card
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Skills</label>
-                    <input type="text" id="skillsInput" placeholder="UI/UX, Branding" oninput="updateCard()">
+                    <label>Organization</label>
+                    <input type="text" id="orgInput" placeholder="GI Creative Space" oninput="updateCard()">
                 </div>
 
                 <div class="form-group">
@@ -120,6 +79,28 @@
                     <input type="text" id="websiteInput" placeholder="www.gicreativespace.com" oninput="updateCard()">
                 </div>
 
+                <!-- Extra Details (Simple) -->
+                <div class="form-group">
+                    <label>Date of Birth (DOB)</label>
+                    <input type="text" id="dobInput" placeholder="01 Jan 1995" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" id="bloodInput" placeholder="O+" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="locationInput" placeholder="Hyderabad" oninput="updateCard()">
+                </div>
+
+                <div class="form-group">
+                    <label>Skills</label>
+                    <input type="text" id="skillsInput" placeholder="UI/UX, Branding" oninput="updateCard()">
+                </div>
+
+                <!-- Theme Selector -->
                 <div class="form-group">
                     <label>Select Theme</label>
                     <div class="theme-selector">
@@ -141,14 +122,6 @@
                         <div class="color-swatch" data-color="charcoal" style="background: #36454F;" onclick="setColor('charcoal')"></div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label>Card Layout & Format</label>
-                    <div class="layout-selector">
-                        <button class="layout-btn active" data-layout="layout-classic" onclick="setLayout('classic')">Classic (9:16)</button>
-                        <button class="layout-btn" data-layout="layout-modern" onclick="setLayout('modern')">Modern (16:9)</button>
-                    </div>
-                </div>
             </div>
 
             <!-- RIGHT SIDE: LIVE PREVIEW -->
@@ -157,8 +130,8 @@
                     
                     <div id="downloadWrapper" class="download-wrapper">
                         
-                        <!-- FRONT CARD -->
-                        <div id="frontCard" class="id-card theme-classic color-green layout-classic">
+                        <!-- THE CARD -->
+                        <div id="frontCard" class="id-card theme-classic color-green">
                             <div class="card-header">
                                 <span class="line"></span> DIGITAL ID <span class="line"></span>
                             </div>
@@ -169,7 +142,7 @@
                             
                             <h2 id="cardName" class="card-name">Your Name</h2>
                             <p id="cardDesignation" class="card-designation">Designation</p>
-                            <p id="cardRole" class="card-org hidden">Organization</p>
+                            <p id="cardOrg" class="card-org hidden">Organization</p>
                             
                             <div class="card-divider"></div>
                             
@@ -181,12 +154,11 @@
                             
                             <div class="card-divider"></div>
                             
-                            <!-- Extra Details (Classic Mode) -->
+                            <!-- Extra Details -->
                             <div class="card-extra-details">
                                 <p id="cardDob" class="hidden"><i class="fa-regular fa-calendar accent-icon"></i> <span id="dobText"></span></p>
                                 <p id="cardBlood" class="hidden"><i class="fa-solid fa-droplet accent-icon"></i> <span id="bloodText"></span></p>
                                 <p id="cardLocation" class="hidden"><i class="fa-solid fa-location-dot accent-icon"></i> <span id="locationText"></span></p>
-                                <p id="cardAddress" class="hidden"><i class="fa-solid fa-map-location-dot accent-icon"></i> <span id="addressText"></span></p>
                                 <p id="cardSkills" class="hidden"><i class="fa-solid fa-wand-magic-sparkles accent-icon"></i> <span id="skillsText"></span></p>
                             </div>
                             
@@ -194,34 +166,6 @@
                             
                             <p class="card-tagline">Your Identity, Digitally.</p>
                             <p class="card-branding">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
-                        </div>
-
-                        <!-- BACK CARD (Modern Layout Only) -->
-                        <div id="backCard" class="id-card theme-classic color-green layout-modern-back hidden">
-                            <div class="card-header">
-                                <span class="line"></span> DIGITAL ID <span class="line"></span>
-                            </div>
-                            
-                            <div class="back-content">
-                                <div class="back-columns">
-                                    <div class="back-col">
-                                        <p id="backDob" class="hidden"><strong>DOB:</strong> <span id="backDobText"></span></p>
-                                        <p id="backBlood" class="hidden"><strong>Blood:</strong> <span id="backBloodText"></span></p>
-                                        <p id="backLocation" class="hidden"><strong>Location:</strong> <span id="backLocationText"></span></p>
-                                        <p id="backAddress" class="hidden"><strong>Address:</strong> <span id="backAddressText"></span></p>
-                                        <p id="backSkills" class="hidden"><strong>Skills:</strong> <span id="backSkillsText"></span></p>
-                                    </div>
-                                    <div class="back-col">
-                                        <p id="backMobile" class="hidden"><i class="fa-solid fa-phone accent-icon"></i> <span id="backMobileText"></span></p>
-                                        <p id="backEmail" class="hidden"><i class="fa-solid fa-envelope accent-icon"></i> <span id="backEmailText"></span></p>
-                                        <p id="backWebsite" class="hidden"><i class="fa-solid fa-globe accent-icon"></i> <span id="backWebsiteText"></span></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="card-divider" style="width: 100%; margin-top: 10px;"></div>
-                                <p class="card-tagline" style="margin-top: 10px; font-size: 12px;">Your Identity, Digitally.</p>
-                                <p class="card-branding" style="font-size: 10px;">An initiative of <span class="valiass-link" onclick="openContactPopup(event)">@valiass</span> team</p>
-                            </div>
                         </div>
 
                     </div>
