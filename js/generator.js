@@ -46,8 +46,10 @@ function loadFormData() {
             document.getElementById('modernPhoto').src = data.photo;
         }
         
-        updateRoleFields(); // Trigger role field labels
-        updateCard(); // Update preview
+        updateRoleFields();
+        updateCard();
+    } else {
+        updateRoleFields(); // Initial load
     }
 }
 
@@ -135,6 +137,9 @@ function updateCard() {
     toggleFieldWithIcon('bEmail', 'bEmailText', email);
     toggleFieldWithIcon('bWebsite', 'bWebsiteText', website);
 
+    // Auto-Fit Font Logic (ఫాంట్ సైజ్ ఆటోమేటిక్‌గా మారడం)
+    adjustFontSize();
+
     // Auto-Save Data
     saveFormData();
 }
@@ -156,6 +161,32 @@ function toggleFieldWithIcon(wrapperId, textId, value) {
     } else {
         wrapper.classList.add('hidden');
     }
+}
+
+// 3.1 Auto-Fit Font Size Function
+function adjustFontSize() {
+    // పేరు పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
+    const nameEls = [document.getElementById('cardName'), document.getElementById('modernName')];
+    nameEls.forEach(el => {
+        const textLength = el.textContent.length;
+        if (textLength > 24) {
+            el.style.fontSize = '14px'; // చాలా పొడవైతే
+        } else if (textLength > 18) {
+            el.style.fontSize = '16px'; // కొంచెం పొడవైతే
+        } else {
+            el.style.fontSize = '18px'; // సాధారణం
+        }
+    });
+
+    // Role/Designation పొడవును బట్టి ఫాంట్ సైజ్ మారుతుంది
+    const roleEls = [document.getElementById('cardRole1'), document.getElementById('modernRole1')];
+    roleEls.forEach(el => {
+        if (el.textContent.length > 25) {
+            el.style.fontSize = '9px';
+        } else {
+            el.style.fontSize = '10px';
+        }
+    });
 }
 
 // 4. Photo Upload & Crop
@@ -201,7 +232,7 @@ document.getElementById('applyCropBtn').addEventListener('click', function() {
         cropper.destroy();
         cropper = null;
         document.getElementById('cropModal').classList.add('hidden');
-        saveFormData(); // Save photo in draft
+        saveFormData();
     }
 });
 
@@ -316,8 +347,3 @@ window.addEventListener('click', function(e) {
     const modal = document.getElementById('contactModal'); 
     if (e.target === modal) closeContactPopup(); 
 });
-
-// Initial Run (If not loaded from storage)
-if (!localStorage.getItem('digitalIdDraft')) {
-    updateRoleFields();
-}
