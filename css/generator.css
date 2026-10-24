@@ -161,7 +161,7 @@
     gap: 6px;
     font-size: 11px;
     width: 100%;
-    padding-left: 10px; /* Left Align */
+    padding-left: 10px;
 }
 
 .card-extra-details.stacked p {
@@ -185,21 +185,54 @@
 #modernFront .card-designation { text-align: left; margin: 0; }
 #modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
 
-/* --- Modern Back Layout (Left & Right Stacked) --- */
+/* --- Modern Back Layout (Fixed Footer) --- */
 #modernBack { padding: 20px; }
-#modernBack .back-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
-#modernBack .back-columns { display: flex; justify-content: space-between; width: 100%; margin-top: 5px; flex-grow: 1; }
-#modernBack .back-col { display: flex; flex-direction: column; gap: 8px; font-size: 11px; text-align: left; }
-#modernBack .back-col p { display: flex; align-items: center; gap: 8px; }
+#modernBack .back-content { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    justify-content: space-between; 
+}
 
-/* --- Modern Back Footer --- */
+#modernBack .back-columns { 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    margin-top: 5px; 
+    flex-grow: 1;
+}
+
+#modernBack .back-col { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    font-size: 11px; 
+    text-align: left; 
+}
+
+#modernBack .back-col p { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+
 #modernBack .back-footer {
     text-align: center;
     width: 100%;
     margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid rgba(200, 169, 106, 0.4);
 }
-#modernBack .back-footer .card-tagline { font-size: 11px; margin-bottom: 2px; }
-#modernBack .back-footer .card-branding { font-size: 9px; }
+
+#modernBack .back-footer .card-tagline { 
+    font-size: 11px; 
+    margin-bottom: 2px; 
+    margin-top: 6px;
+}
+
+#modernBack .back-footer .card-branding { 
+    font-size: 9px; 
+}
 
 /* --- Action Buttons & Share --- */
 .action-buttons { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
