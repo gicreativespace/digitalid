@@ -159,13 +159,6 @@
     line-height: 1.2;
 }
 
-/* ఈమెయిల్ మరియు వెబ్‌సైట్ అజీబుగా కట్ అవ్వకుండా ఒకే లైన్‌లో ఉంచడం */
-#bEmailText, #bWebsiteText {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-}
-
 /* --- Classic Stacked Details --- */
 .card-extra-details.stacked {
     display: flex;
@@ -191,7 +184,7 @@
 #modernFront .card-designation { text-align: left; margin: 0; }
 #modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
 
-/* --- Modern Back Layout (Fixed Footer) --- */
+/* --- Modern Back Layout (Fixed Footer & New Sections) --- */
 #modernBack { 
     padding: 15px 20px 10px 20px;
     display: flex;
@@ -205,37 +198,57 @@
     justify-content: space-between; 
 }
 
-#modernBack .back-columns { 
-    display: flex; 
-    justify-content: space-between; 
-    width: 100%; 
+/* Top Section: Side by Side */
+#modernBack .back-top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#modernBack .back-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     gap: 10px;
 }
 
-#modernBack .back-col { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 4px; 
-    font-size: 10px; 
-    text-align: left; 
-    line-height: 1.2;
+#modernBack .back-row p {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 0;
+    font-size: 10px;
     flex: 1;
     min-width: 0;
+    text-align: left;
 }
 
-#modernBack .back-col p { 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
+/* Bottom Section: Left Aligned Stack */
+#modernBack .back-bottom-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+}
+
+#modernBack .back-bottom-section p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     margin: 0;
+    font-size: 10px;
+    width: 100%;
 }
 
+/* Footer */
 #modernBack .back-footer {
     text-align: center;
     width: 100%;
-    margin-top: 5px;
+    margin-top: auto;
     padding-top: 5px;
-    border-top: 1px solid rgba(200, 169, 106, 0.4);
     flex-shrink: 0;
 }
 
