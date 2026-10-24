@@ -1,6 +1,57 @@
-let cropper = null; // Global variable for cropper
+let cropper = null;
 
-// 1. Role Logic (Section Wise)
+// 1. Auto-Save: Load Saved Data on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+    loadFormData();
+});
+
+function saveFormData() {
+    const data = {
+        name: document.getElementById('nameInput').value,
+        dob: document.getElementById('dobInput').value,
+        blood: document.getElementById('bloodInput').value,
+        role: document.getElementById('roleSelect').value,
+        role1: document.getElementById('roleField1Input').value,
+        role2: document.getElementById('roleField2Input').value,
+        location: document.getElementById('locationInput').value,
+        address: document.getElementById('addressInput').value,
+        showAddress: document.getElementById('showAddress').checked,
+        mobile: document.getElementById('mobileInput').value,
+        email: document.getElementById('emailInput').value,
+        website: document.getElementById('websiteInput').value,
+        photo: document.getElementById('cardPhoto').src
+    };
+    localStorage.setItem('digitalIdDraft', JSON.stringify(data));
+}
+
+function loadFormData() {
+    const savedData = localStorage.getItem('digitalIdDraft');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        document.getElementById('nameInput').value = data.name || '';
+        document.getElementById('dobInput').value = data.dob || '';
+        document.getElementById('bloodInput').value = data.blood || '';
+        document.getElementById('roleSelect').value = data.role || 'personal';
+        document.getElementById('roleField1Input').value = data.role1 || '';
+        document.getElementById('roleField2Input').value = data.role2 || '';
+        document.getElementById('locationInput').value = data.location || '';
+        document.getElementById('addressInput').value = data.address || '';
+        document.getElementById('showAddress').checked = data.showAddress || false;
+        document.getElementById('mobileInput').value = data.mobile || '';
+        document.getElementById('emailInput').value = data.email || '';
+        document.getElementById('websiteInput').value = data.website || '';
+        
+        if (data.photo && data.photo !== 'https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150') {
+            document.getElementById('cardPhoto').src = data.photo;
+            document.getElementById('modernPhoto').src = data.photo;
+        }
+        
+        updateRoleFields(); // Trigger role field labels
+        updateCard(); // Update preview
+    }
+}
+
+// 2. Role Logic (Section Wise)
 function updateRoleFields() {
     const role = document.getElementById('roleSelect').value;
     const container = document.getElementById('roleFieldsContainer');
@@ -37,9 +88,8 @@ function updateRoleFields() {
     updateCard();
 }
 
-// 2. Live Update Logic
+// 3. Live Update Logic
 function updateCard() {
-    // Values
     const name = document.getElementById('nameInput').value.trim();
     const dob = document.getElementById('dobInput').value.trim();
     const blood = document.getElementById('bloodInput').value.trim();
@@ -84,6 +134,9 @@ function updateCard() {
     toggleFieldWithIcon('bMobile', 'bMobileText', mobile);
     toggleFieldWithIcon('bEmail', 'bEmailText', email);
     toggleFieldWithIcon('bWebsite', 'bWebsiteText', website);
+
+    // Auto-Save Data
+    saveFormData();
 }
 
 function toggleField(wrapperId, textId, value) {
@@ -105,7 +158,7 @@ function toggleFieldWithIcon(wrapperId, textId, value) {
     }
 }
 
-// 3. Photo Upload & Crop Logic
+// 4. Photo Upload & Crop
 document.getElementById('fileInput').addEventListener('change', function(e) { handlePhotoUpload(e.target.files[0]); });
 document.getElementById('cameraInput').addEventListener('change', function(e) { handlePhotoUpload(e.target.files[0]); });
 
@@ -119,10 +172,9 @@ function handlePhotoUpload(file) {
             cropImage.src = e.target.result;
             cropModal.classList.remove('hidden');
 
-            // Initialize Cropper
             if (cropper) cropper.destroy();
             cropper = new Cropper(cropImage, {
-                aspectRatio: 1, // Square crop for circle
+                aspectRatio: 1,
                 viewMode: 1,
                 dragMode: 'move',
                 autoCropArea: 0.8,
@@ -138,7 +190,6 @@ function handlePhotoUpload(file) {
     }
 }
 
-// Crop Apply/Cancel
 document.getElementById('applyCropBtn').addEventListener('click', function() {
     if (cropper) {
         const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
@@ -150,6 +201,7 @@ document.getElementById('applyCropBtn').addEventListener('click', function() {
         cropper.destroy();
         cropper = null;
         document.getElementById('cropModal').classList.add('hidden');
+        saveFormData(); // Save photo in draft
     }
 });
 
@@ -161,7 +213,7 @@ document.getElementById('cancelCropBtn').addEventListener('click', function() {
     document.getElementById('cropModal').classList.add('hidden');
 });
 
-// 4. Layout Logic
+// 5. Layout Logic
 function setLayout(layout) {
     const classicCard = document.getElementById('classicCard');
     const modernWrapper = document.getElementById('modernWrapper');
@@ -178,7 +230,7 @@ function setLayout(layout) {
     document.querySelector(`.layout-btn[data-layout="layout-${layout}"]`).classList.add('active');
 }
 
-// 5. Theme Logic
+// 6. Theme Logic
 function setTheme(themeName) {
     const cards = [document.getElementById('classicCard'), document.getElementById('modernFront'), document.getElementById('modernBack')];
     cards.forEach(card => {
@@ -190,7 +242,7 @@ function setTheme(themeName) {
     document.querySelector(`.theme-btn[data-theme="${themeName}"]`).classList.add('active');
 }
 
-// 6. Color Logic
+// 7. Color Logic
 function setColor(colorName) {
     const cards = [document.getElementById('classicCard'), document.getElementById('modernFront'), document.getElementById('modernBack')];
     cards.forEach(card => {
@@ -202,7 +254,7 @@ function setColor(colorName) {
     document.querySelector(`.color-swatch[data-color="${colorName}"]`).classList.add('active');
 }
 
-// 7. Download Logic
+// 8. Download Logic
 document.getElementById('downloadBtn').addEventListener('click', async function() {
     const wrapper = document.getElementById('downloadWrapper');
     const originalText = this.textContent;
@@ -228,7 +280,36 @@ document.getElementById('downloadBtn').addEventListener('click', async function(
     }
 });
 
-// 8. Contact Popup
+// 9. Share Logic
+function shareWhatsApp(e) {
+    e.preventDefault();
+    const siteLink = window.location.href.split('generator.html')[0] + 'index.html';
+    const text = encodeURIComponent(`Check out my Digital ID! Create yours for free at: ${siteLink}`);
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function shareEmail(e) {
+    e.preventDefault();
+    const siteLink = window.location.href.split('generator.html')[0] + 'index.html';
+    const subject = encodeURIComponent('Check out my Digital ID');
+    const body = encodeURIComponent(`Hi,\n\nI just created my Digital ID. You can create yours for free here: ${siteLink}\n\nRegards.`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
+// 10. Clear Form Logic
+document.getElementById('clearFormBtn').addEventListener('click', () => {
+    if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+        localStorage.removeItem('digitalIdDraft');
+        document.querySelectorAll('input[type="text"], input[type="email"]').forEach(input => input.value = '');
+        document.getElementById('showAddress').checked = false;
+        document.getElementById('cardPhoto').src = 'https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150';
+        document.getElementById('modernPhoto').src = 'https://ui-avatars.com/api/?name=User&background=1F3D2B&color=C8A96A&size=150';
+        updateCard();
+        alert("Data cleared successfully.");
+    }
+});
+
+// 11. Contact Popup
 function openContactPopup(e) { e.preventDefault(); document.getElementById('contactModal').classList.remove('hidden'); }
 function closeContactPopup() { document.getElementById('contactModal').classList.add('hidden'); }
 window.addEventListener('click', function(e) { 
@@ -236,5 +317,7 @@ window.addEventListener('click', function(e) {
     if (e.target === modal) closeContactPopup(); 
 });
 
-// Initial Run
-updateRoleFields();
+// Initial Run (If not loaded from storage)
+if (!localStorage.getItem('digitalIdDraft')) {
+    updateRoleFields();
+}
