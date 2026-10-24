@@ -1,6 +1,5 @@
 // 1. Live Update Logic
 function updateCard() {
-    // Get values
     const name = document.getElementById('nameInput').value.trim();
     const designation = document.getElementById('designationInput').value.trim();
     const org = document.getElementById('orgInput').value.trim();
@@ -8,15 +7,24 @@ function updateCard() {
     const email = document.getElementById('emailInput').value.trim();
     const website = document.getElementById('websiteInput').value.trim();
 
-    // Update Text
+    // Update Front Card
     document.getElementById('cardName').textContent = name || "Your Name";
     document.getElementById('cardDesignation').textContent = designation || "Designation";
     document.getElementById('cardOrg').textContent = org || "Organization";
 
-    // Handle Contact Fields (Hide if empty)
+    // Update Back Card
+    document.getElementById('backName').textContent = name || "Your Name";
+    document.getElementById('backDesignation').textContent = designation || "Designation";
+
+    // Handle Contact Fields (Front)
     toggleField('cardMobile', 'mobileText', mobile);
     toggleField('cardEmail', 'emailText', email);
     toggleField('cardWebsite', 'websiteText', website);
+
+    // Handle Contact Fields (Back)
+    toggleField('backMobile', 'backMobileText', mobile);
+    toggleField('backEmail', 'backEmailText', email);
+    toggleField('backWebsite', 'backWebsiteText', website);
 }
 
 function toggleField(wrapperId, textId, value) {
@@ -29,13 +37,9 @@ function toggleField(wrapperId, textId, value) {
     }
 }
 
-// 2. Photo Upload Logic
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    handlePhoto(e.target.files[0]);
-});
-document.getElementById('cameraInput').addEventListener('change', function(e) {
-    handlePhoto(e.target.files[0]);
-});
+// 2. Photo Upload
+document.getElementById('fileInput').addEventListener('change', function(e) { handlePhoto(e.target.files[0]); });
+document.getElementById('cameraInput').addEventListener('change', function(e) { handlePhoto(e.target.files[0]); });
 
 function handlePhoto(file) {
     if (file) {
@@ -47,76 +51,84 @@ function handlePhoto(file) {
     }
 }
 
-// 3. Theme & Layout Logic
+// 3. Theme Logic
 function setTheme(themeName) {
-    const card = document.getElementById('cardPreview');
-    // Remove existing theme classes
-    card.className = card.className.replace(/theme-\w+/g, '');
-    card.classList.add(`theme-${themeName}`);
+    const frontCard = document.getElementById('frontCard');
+    const backCard = document.getElementById('backCard');
     
-    // Update active button UI
+    // Remove old themes
+    frontCard.className = frontCard.className.replace(/theme-\w+/g, '');
+    backCard.className = backCard.className.replace(/theme-\w+/g, '');
+    
+    // Add new
+    frontCard.classList.add(`theme-${themeName}`);
+    backCard.classList.add(`theme-${themeName}`);
+    
     document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.theme-btn[data-theme="${themeName}"]`).classList.add('active');
 }
 
+// 4. Layout Logic (Modern Front & Back)
 function setLayout(layoutName) {
-    const card = document.getElementById('cardPreview');
-    card.className = card.className.replace(/layout-\w+/g, '');
-    card.classList.add(layoutName);
+    const frontCard = document.getElementById('frontCard');
+    const backCard = document.getElementById('backCard');
+    
+    frontCard.className = frontCard.className.replace(/layout-\w+/g, '');
+    
+    if (layoutName === 'layout-modern') {
+        frontCard.classList.add('layout-modern');
+        backCard.classList.remove('hidden');
+        backCard.classList.add('layout-modern-back');
+    } else {
+        frontCard.classList.add('layout-classic');
+        backCard.classList.add('hidden');
+        backCard.classList.remove('layout-modern-back');
+    }
     
     document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.layout-btn[data-layout="${layoutName}"]`).classList.add('active');
 }
 
-// 4. Download Logic (Using HTML Canvas for High-Res)
+// 5. Download Logic (Captures Both Cards)
 document.getElementById('downloadBtn').addEventListener('click', async function() {
-    const cardElement = document.getElementById('cardPreview');
+    const wrapper = document.getElementById('downloadWrapper');
     const format = document.getElementById('formatSelect').value;
     
-    // Show loading state
     const originalText = this.textContent;
     this.textContent = "Generating... Please wait";
     this.disabled = true;
 
     try {
-        // Use html2canvas library (Needs to be added in HTML)
-        // For now, we assume html2canvas is loaded via CDN in index.html
-        const canvas = await html2canvas(cardElement, {
-            scale: 2, // High resolution
+        // Hide elements not needed in download (e.g., external padding if any)
+        const canvas = await html2canvas(wrapper, {
+            scale: 2,
             useCORS: true,
-            backgroundColor: null
+            backgroundColor: getComputedStyle(document.body).backgroundColor // Match page bg
         });
 
-        // Create Download Link
         const link = document.createElement('a');
         link.download = `DigitalID_${format}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
         
     } catch (error) {
-        console.error("Error generating card:", error);
+        console.error("Error:", error);
         alert("Failed to generate image. Please try again.");
     } finally {
-        // Reset button
         this.textContent = originalText;
         this.disabled = false;
     }
 });
 
-// 5. Contact Popup Logic
+// 6. Contact Popup
 function openContactPopup(e) {
     e.preventDefault();
     document.getElementById('contactModal').classList.remove('hidden');
 }
-
 function closeContactPopup() {
     document.getElementById('contactModal').classList.add('hidden');
 }
-
-// Close modal when clicking outside
 window.addEventListener('click', function(e) {
     const modal = document.getElementById('contactModal');
-    if (e.target === modal) {
-        closeContactPopup();
-    }
+    if (e.target === modal) closeContactPopup();
 });
