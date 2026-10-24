@@ -128,14 +128,11 @@
     transition: all 0.3s ease;
 }
 
-/* Classic Card Specific */
 #classicCard { aspect-ratio: 9 / 16; }
-
-/* Modern Cards Specific */
 .modern-wrapper { width: 100%; display: flex; flex-direction: column; gap: 16px; }
 #modernFront, #modernBack { aspect-ratio: 16 / 9; }
 
-/* Card Content */
+/* Card Content Base */
 .card-header {
     display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
     font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 3px; margin-bottom: 16px;
@@ -144,14 +141,24 @@
 
 .card-photo-container {
     width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--champagne); padding: 3px; margin-bottom: 12px; background: var(--ivory);
+    flex-shrink: 0; /* Photo size not shrinking */
 }
 .card-photo-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
 .card-name { font-family: 'Playfair Display', serif; font-size: 18px; text-align: center; margin-bottom: 4px; }
 .card-designation { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--champagne); font-weight: 600; margin-bottom: 4px; }
 .card-org { font-size: 12px; margin-bottom: 12px; text-align: center; }
-.card-divider { width: 80%; height: 1px; background: var(--champagne); opacity: 0.5; margin: 10px 0; }
+.card-divider { width: 80%; height: 1px; background: var(--champagne); opacity: 0.5; margin: 10px 0; flex-shrink: 0; }
 .card-contact { width: 100%; display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
 .card-contact p { display: flex; align-items: center; gap: 8px; }
+
+/* --- Auto-Fit Text Rules (The Magic) --- */
+.auto-fit-text, 
+.auto-fit-text span {
+    word-break: break-word; /* పొడవైన పదాలు కొత్త లైన్‌కి */
+    white-space: normal; /* రెండు లైన్లలోకి వెళ్ళేలా */
+    line-height: 1.2;
+}
 
 /* --- Classic Stacked Details --- */
 .card-extra-details.stacked {
@@ -163,76 +170,32 @@
     width: 100%;
     padding-left: 10px;
 }
-
-.card-extra-details.stacked p {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-}
+.card-extra-details.stacked p { display: flex; align-items: flex-start; gap: 8px; margin: 0; }
 
 .hidden { display: none !important; }
-
 .card-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: var(--champagne); margin-top: auto; margin-bottom: 6px; transition: color 0.3s; }
 .card-branding { font-size: 9px; opacity: 0.7; transition: color 0.3s; }
 
 /* --- Modern Layout Specifics --- */
 #modernFront { padding: 20px; justify-content: flex-start; }
 #modernFront .modern-body { display: flex; flex-direction: row; align-items: center; gap: 20px; width: 100%; margin-top: 10px; }
-#modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; flex-shrink: 0; }
-#modernFront .modern-text { display: flex; flex-direction: column; justify-content: center; text-align: left; }
+#modernFront .card-photo-container { width: 80px; height: 80px; margin: 0; }
+#modernFront .modern-text { display: flex; flex-direction: column; justify-content: center; text-align: left; flex: 1; min-width: 0; }
 #modernFront .card-name { text-align: left; font-size: 20px; margin: 0; }
 #modernFront .card-designation { text-align: left; margin: 0; }
 #modernFront .card-org { text-align: left; margin: 0; font-size: 14px; }
 
-/* --- Modern Back Layout (Fixed Footer) --- */
+/* --- Modern Back Layout --- */
 #modernBack { padding: 20px; }
-#modernBack .back-content { 
-    display: flex; 
-    flex-direction: column; 
-    height: 100%; 
-    justify-content: space-between; 
-}
+#modernBack .back-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+#modernBack .back-columns { display: flex; justify-content: space-between; width: 100%; margin-top: 5px; flex-grow: 1; gap: 15px; }
+#modernBack .back-col { display: flex; flex-direction: column; gap: 8px; font-size: 11px; text-align: left; flex: 1; min-width: 0; }
+#modernBack .back-col p { display: flex; align-items: flex-start; gap: 8px; }
 
-#modernBack .back-columns { 
-    display: flex; 
-    justify-content: space-between; 
-    width: 100%; 
-    margin-top: 5px; 
-    flex-grow: 1;
-}
-
-#modernBack .back-col { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px; 
-    font-size: 11px; 
-    text-align: left; 
-}
-
-#modernBack .back-col p { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-}
-
-#modernBack .back-footer {
-    text-align: center;
-    width: 100%;
-    margin-top: auto;
-    padding-top: 8px;
-    border-top: 1px solid rgba(200, 169, 106, 0.4);
-}
-
-#modernBack .back-footer .card-tagline { 
-    font-size: 11px; 
-    margin-bottom: 2px; 
-    margin-top: 6px;
-}
-
-#modernBack .back-footer .card-branding { 
-    font-size: 9px; 
-}
+/* Modern Back Footer */
+#modernBack .back-footer { text-align: center; width: 100%; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(200, 169, 106, 0.4); }
+#modernBack .back-footer .card-tagline { font-size: 11px; margin-bottom: 2px; margin-top: 6px; }
+#modernBack .back-footer .card-branding { font-size: 9px; }
 
 /* --- Action Buttons & Share --- */
 .action-buttons { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
@@ -246,8 +209,8 @@
 #shareEmail { background: var(--ivory); color: var(--forest-green); border: 1px solid var(--champagne); }
 #shareEmail:hover { background: rgba(200, 169, 106, 0.2); }
 
-/* --- Accent Colors --- */
-.accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; transition: color 0.3s; }
+/* --- Accent Colors & Themes --- */
+.accent-icon { color: var(--accent-color, var(--champagne)); width: 14px; text-align: center; transition: color 0.3s; flex-shrink: 0; }
 .color-green { --accent-color: #6B8E78; }
 .color-gold { --accent-color: #D4AF37; }
 .color-blue { --accent-color: #6C8EBF; }
@@ -256,7 +219,6 @@
 .color-white { --accent-color: #FFFFFF; }
 .color-black { --accent-color: #333333; }
 
-/* --- Themes --- */
 .theme-classic { background-color: var(--white); color: var(--forest-green); }
 .theme-classic .accent-icon { color: var(--accent-color); }
 
@@ -277,11 +239,15 @@
 .theme-earthy .card-header .line, .theme-earthy .card-divider { background-color: #BCAAA4; }
 .theme-earthy .accent-icon { color: var(--accent-color); }
 
-/* --- Crop Modal Specifics --- */
+/* --- Crop & Modals --- */
 .crop-container { width: 100%; height: 300px; background: #333; margin-bottom: 16px; border-radius: 8px; overflow: hidden; }
 #cropImage { display: block; max-width: 100%; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 61, 43, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); }
+.modal-content { background: var(--white); padding: 24px; border-radius: 16px; text-align: center; width: 90%; max-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.contact-buttons { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+.close-btn { background: transparent; border: none; color: var(--warm-grey); cursor: pointer; }
 
-/* --- Responsive Adjustments --- */
+/* --- Responsive & Nav --- */
 @media (max-width: 768px) {
     .generator-layout { flex-direction: column; align-items: center; }
     .form-section { width: 100%; max-width: 100%; }
@@ -291,15 +257,7 @@
     #classicCard { width: 100%; max-width: 320px; }
     #modernFront, #modernBack { width: 100%; max-width: 380px; }
 }
-
-/* --- Top Nav & Links --- */
 .top-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; }
 .back-btn { color: var(--forest-green); text-decoration: none; font-weight: 600; font-size: 14px; }
 .valiass-link { color: var(--forest-green); font-weight: 600; cursor: pointer; text-decoration: none; }
 .valiass-link:hover { text-decoration: underline; }
-
-/* --- Modal --- */
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 61, 43, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(3px); }
-.modal-content { background: var(--white); padding: 24px; border-radius: 16px; text-align: center; width: 90%; max-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-.contact-buttons { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-.close-btn { background: transparent; border: none; color: var(--warm-grey); cursor: pointer; }
