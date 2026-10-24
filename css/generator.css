@@ -159,6 +159,13 @@
     line-height: 1.2;
 }
 
+/* ఈమెయిల్ మరియు వెబ్‌సైట్ అజీబుగా కట్ అవ్వకుండా ఒకే లైన్‌లో ఉంచడం */
+#bEmailText, #bWebsiteText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
 /* --- Classic Stacked Details --- */
 .card-extra-details.stacked {
     display: flex;
@@ -202,23 +209,23 @@
     display: flex; 
     justify-content: space-between; 
     width: 100%; 
-    gap: 15px;
+    gap: 10px;
 }
 
 #modernBack .back-col { 
     display: flex; 
     flex-direction: column; 
-    gap: 5px; 
+    gap: 4px; 
     font-size: 10px; 
     text-align: left; 
-    line-height: 1.3;
+    line-height: 1.2;
     flex: 1;
     min-width: 0;
 }
 
 #modernBack .back-col p { 
     display: flex; 
-    align-items: flex-start; 
+    align-items: center; 
     gap: 6px; 
     margin: 0;
 }
@@ -226,8 +233,8 @@
 #modernBack .back-footer {
     text-align: center;
     width: 100%;
-    margin-top: 8px;
-    padding-top: 6px;
+    margin-top: 5px;
+    padding-top: 5px;
     border-top: 1px solid rgba(200, 169, 106, 0.4);
     flex-shrink: 0;
 }
